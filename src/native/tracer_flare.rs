@@ -58,7 +58,7 @@ fn register_exceptions(m: &Bound<'_, PyModule>) -> PyResult<()> {
 }
 
 /// Python wrapper for FlareAction
-// AIDEV-NOTE(pyo3 0.28): `from_py_object` preserves the automatic FromPyObject
+// TODO(py-315)(pyo3 0.28): `from_py_object` preserves the automatic FromPyObject
 // derive for Clone-able pyclasses, which pyo3 deprecated as opt-in in 0.28.
 // Required because `FlareActionPy` is accepted as an argument to
 // `TracerFlareManagerPy.zip_and_send`.
