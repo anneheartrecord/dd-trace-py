@@ -215,13 +215,12 @@ unsafe fn advance_frame(frame: *mut pyo3_ffi::PyFrameObject) -> *mut pyo3_ffi::P
     if frame.is_null() {
         return ptr::null_mut();
     }
-    // PyFrame_GetBack was removed in CPython 3.14 (deprecated since 3.11, PEP 667).
-    // It is also absent from pyo3-ffi's stable/limited-API bindings (Py_LIMITED_API),
-    // which is activated for Python 3.15 via PYO3_USE_ABI3_FORWARD_COMPATIBILITY.
-    // On 3.14+ the crashtracker captures only the top frame rather than the full stack.
-    #[cfg(not(any(Py_3_14, Py_LIMITED_API)))]
+    // PyFrame_GetBack is absent from pyo3-ffi's stable/limited-API bindings (Py_LIMITED_API),
+    // which is activated for Python 3.15+ via PYO3_USE_ABI3_FORWARD_COMPATIBILITY.
+    // On Py_LIMITED_API builds the crashtracker captures only the top frame rather than the full stack.
+    #[cfg(not(Py_LIMITED_API))]
     let back = pyo3_ffi::PyFrame_GetBack(frame);
-    #[cfg(any(Py_3_14, Py_LIMITED_API))]
+    #[cfg(Py_LIMITED_API)]
     let back: *mut pyo3_ffi::PyFrameObject = ptr::null_mut();
     pyo3_ffi::Py_DecRef(frame as *mut pyo3_ffi::PyObject);
     back
