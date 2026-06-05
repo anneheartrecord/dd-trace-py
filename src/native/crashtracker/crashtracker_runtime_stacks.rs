@@ -26,9 +26,15 @@ type PyDumpTracebackThreadsFn = unsafe extern "C" fn(
     current_tstate: *mut pyo3_ffi::PyThreadState,
 ) -> *const c_char;
 
-// Cached function pointer to avoid dlsym during crash
+// Function pointer type for PyFrame_GetBack
+type PyFrameGetBackFn =
+    unsafe extern "C" fn(*mut pyo3_ffi::PyFrameObject) -> *mut pyo3_ffi::PyFrameObject;
+
+// Cached function pointers to avoid dlsym during crash
 static mut DUMP_TRACEBACK_FN: Option<PyDumpTracebackThreadsFn> = None;
 static DUMP_TRACEBACK_INIT: Once = Once::new();
+static mut FRAME_GET_BACK_FN: Option<PyFrameGetBackFn> = None;
+static FRAME_GET_BACK_INIT: Once = Once::new();
 
 const MAX_TRACEBACK_SIZE: usize = 8 * 1024; // 8KB
 
@@ -65,6 +71,45 @@ pub unsafe fn init_dump_traceback_fn() {
 // Get the cached function pointer; should only be called after init_dump_traceback_fn
 pub unsafe fn get_cached_dump_traceback_fn() -> Option<PyDumpTracebackThreadsFn> {
     DUMP_TRACEBACK_FN
+}
+
+// PyFrame_GetBack is in CPython's public C API through 3.14+,
+// but is absent from the limited API (Py_LIMITED_API). Rather than using compile-time
+// cfg guards that break under PYO3_USE_ABI3_FORWARD_COMPATIBILITY, we resolve the symbol
+// at runtime by using dlsym. This is safe because init runs at crashtracker registration time,
+// not during the crash signal handler.
+pub unsafe fn init_frame_get_back_fn() {
+    FRAME_GET_BACK_INIT.call_once(|| {
+        #[cfg(unix)]
+        {
+            extern "C" {
+                fn dlsym(
+                    handle: *mut std::ffi::c_void,
+                    symbol: *const std::ffi::c_char,
+                ) -> *mut std::ffi::c_void;
+            }
+
+            const RTLD_DEFAULT: *mut std::ffi::c_void = ptr::null_mut();
+
+            let symbol_ptr = dlsym(
+                RTLD_DEFAULT,
+                b"PyFrame_GetBack\0".as_ptr() as *const std::ffi::c_char,
+            );
+
+            if !symbol_ptr.is_null() {
+                FRAME_GET_BACK_FN = Some(std::mem::transmute(symbol_ptr));
+            }
+        }
+
+        #[cfg(not(unix))]
+        {
+            // FRAME_GET_BACK_FN remains None on non-Unix platforms
+        }
+    });
+}
+
+unsafe fn get_cached_frame_get_back_fn() -> Option<PyFrameGetBackFn> {
+    FRAME_GET_BACK_FN
 }
 
 unsafe fn dump_python_traceback_as_string(
@@ -220,8 +265,13 @@ unsafe fn advance_frame(frame: *mut pyo3_ffi::PyFrameObject) -> *mut pyo3_ffi::P
     // On Py_LIMITED_API builds the crashtracker captures only the top frame rather than the full stack.
     #[cfg(not(Py_LIMITED_API))]
     let back = pyo3_ffi::PyFrame_GetBack(frame);
+
     #[cfg(Py_LIMITED_API)]
-    let back: *mut pyo3_ffi::PyFrameObject = ptr::null_mut();
+    let back = match get_cached_frame_get_back_fn() {
+        Some(get_back) => get_back(frame),
+        None => ptr::null_mut(),
+    };
+
     pyo3_ffi::Py_DecRef(frame as *mut pyo3_ffi::PyObject);
     back
 }
