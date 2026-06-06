@@ -224,8 +224,8 @@ integrations:
       min: 1.34.49
       max: 1.38.26
     botocore:
-      min: 1.34.49
-      max: 1.38.26
+      min: 1.15.32
+      max: 1.42.19
 
 - integration_name: bottle
   is_external_package: true
@@ -559,13 +559,13 @@ integrations:
   tested_versions_by_dependency:
     langgraph:
       min: 0.2.23
-      max: 1.1.10
+      max: 1.2.4
     langgraph-checkpoint:
       min: 1.0.12
-      max: 4.0.3
+      max: 4.1.1
     langgraph-prebuilt:
       min: 0.1.8
-      max: 1.0.13
+      max: 1.1.0
 
 - integration_name: litellm
   is_external_package: true
