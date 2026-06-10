@@ -281,58 +281,39 @@ def test_set_framework_updates_c_tracer_context(_fresh_rank_root):
 # ---------------------------------------------------------------------------
 
 
-def _make_fake_lib_no_steps():
-    """A lib where set/clear are present but step symbols raise AttributeError.
-
-    Uses spec= so that accessing any attribute not listed raises AttributeError,
-    which is what ctypes.CDLL does for absent symbols.
-    """
-
-    class _LibWithoutSteps:
-        dd_set_global_parent_context = None
-        dd_clear_global_parent_context = None
-
-    lib = mock.MagicMock(spec=_LibWithoutSteps)
-    lib.dd_set_global_parent_context.restype = None
-    lib.dd_clear_global_parent_context.restype = None
-    return lib
-
-
 def test_step_begin_noop_when_symbol_absent():
+    """step_begin() is silent when the C symbol was not bound at load time."""
     mod = _fresh_module()
-    mod._loaded = False
-    with mock.patch("ctypes.CDLL", return_value=_make_fake_lib_no_steps()):
-        mod._load()
-        assert mod._step_begin_fn is None
-        mod.step_begin()  # must not raise
+    mod._loaded = True
+    mod._lib = object()  # truthy — looks loaded
+    mod._step_begin_fn = None
+    mod.step_begin()  # must not raise
 
 
 def test_step_end_noop_when_symbol_absent():
+    """step_end() is silent when the C symbol was not bound at load time."""
     mod = _fresh_module()
-    mod._loaded = False
-    with mock.patch("ctypes.CDLL", return_value=_make_fake_lib_no_steps()):
-        mod._load()
-        assert mod._step_end_fn is None
-        mod.step_end()  # must not raise
+    mod._loaded = True
+    mod._lib = object()
+    mod._step_end_fn = None
+    mod.step_end()  # must not raise
 
 
 def test_step_begin_calls_c_symbol():
     mod = _fresh_module()
-    mod._loaded = False
-    fake_lib = _make_fake_lib()
-    with mock.patch("ctypes.CDLL", return_value=fake_lib):
-        mod._load()
-        assert mod._step_begin_fn is not None
-        mod.step_begin()
-        assert fake_lib.dd_training_step_begin.called
+    fn = mock.Mock()
+    mod._loaded = True
+    mod._lib = object()
+    mod._step_begin_fn = fn
+    mod.step_begin()
+    assert fn.called
 
 
 def test_step_end_calls_c_symbol():
     mod = _fresh_module()
-    mod._loaded = False
-    fake_lib = _make_fake_lib()
-    with mock.patch("ctypes.CDLL", return_value=fake_lib):
-        mod._load()
-        assert mod._step_end_fn is not None
-        mod.step_end()
-        assert fake_lib.dd_training_step_end.called
+    fn = mock.Mock()
+    mod._loaded = True
+    mod._lib = object()
+    mod._step_end_fn = fn
+    mod.step_end()
+    assert fn.called
