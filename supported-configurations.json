@@ -6015,6 +6015,13 @@
         "default": null,
         "internal": true
       }
+    ],
+    "DD_TRAINING_STEP_PROFILING": [
+      {
+        "implementation": "A",
+        "type": "boolean",
+        "default": "false"
+      }
     ]
   }
 }
