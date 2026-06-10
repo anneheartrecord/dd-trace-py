@@ -30,10 +30,11 @@ def _make_absent_lib():
     return lib
 
 
-def _make_fake_span(trace_id=0xDEADBEEF00000001, span_id=0xCAFE, sampling_priority=1):
+def _make_fake_span(trace_id=0xDEADBEEF00000001, span_id=0xCAFE, sampling_priority=1, service="pytorch"):
     span = mock.Mock()
     span.trace_id = trace_id
     span.span_id = span_id
+    span.service = service
     span.context.sampling_priority = sampling_priority
     return span
 
@@ -154,7 +155,7 @@ def test_set_parent_context_tag_payload():
     assert tag_map["rank"] == "3"
     assert tag_map["world_size"] == "8"
     assert tag_map["framework"] == "fsdp"
-    assert "service" in tag_map
+    assert tag_map["service"] == "pytorch"
 
 
 def test_set_parent_context_swallows_exception():
