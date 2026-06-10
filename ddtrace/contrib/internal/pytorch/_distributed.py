@@ -42,6 +42,7 @@ _cached_distributed_backend: Optional[str] = None
 def _step_profiling_enabled() -> bool:
     return env.get("DD_TRAINING_STEP_PROFILING", "false").lower() in ("true", "1")
 
+
 # Wire-format env var names set by the Ray contrib on worker processes.
 # AIDEV-NOTE: duplicated from ddtrace.contrib.internal.ray intentionally —
 # contrib-to-contrib imports break isolation (ray contrib may not be installed).
