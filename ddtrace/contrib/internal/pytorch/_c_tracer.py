@@ -10,6 +10,7 @@ from typing import Any
 from typing import Callable
 from typing import Optional
 
+import ddtrace
 from ddtrace.internal.logger import get_logger
 
 
@@ -98,6 +99,7 @@ def set_parent_context(span: Any, open_kwargs: dict[str, Any]) -> None:
             "rank": str(open_kwargs.get("rank", 0)),
             "world_size": str(open_kwargs.get("world_size", 1)),
             "framework": str(open_kwargs.get("framework") or "none"),
+            "service": str(ddtrace.config.service or ""),
         }
         keys_enc = [k.encode() for k in tags]
         vals_enc = [v.encode() for v in tags.values()]

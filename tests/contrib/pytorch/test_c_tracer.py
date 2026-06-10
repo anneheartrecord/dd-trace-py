@@ -144,7 +144,7 @@ def test_set_parent_context_tag_payload():
 
     args = captured["args"]
     count = args[7].value  # c_size_t
-    assert count == 4
+    assert count == 5
 
     keys = [args[5][i].decode() for i in range(count)]
     vals = [args[6][i].decode() for i in range(count)]
@@ -154,6 +154,7 @@ def test_set_parent_context_tag_payload():
     assert tag_map["rank"] == "3"
     assert tag_map["world_size"] == "8"
     assert tag_map["framework"] == "fsdp"
+    assert "service" in tag_map
 
 
 def test_set_parent_context_swallows_exception():

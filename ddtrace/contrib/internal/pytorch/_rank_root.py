@@ -40,9 +40,11 @@ def _build_span(kwargs: dict[str, Any]) -> Optional[Any]:
     framework = kwargs["framework"]
     training_job_id = kwargs["training_job_id"]
     try:
+        import ddtrace as _ddtrace  # noqa: PLC0415
+
         span = tracer.start_span(
             "pytorch.rank",
-            service=ext_service(None, config.pytorch),
+            service=_ddtrace.config.service or ext_service(None, config.pytorch),
             child_of=tracer.current_span(),
             activate=False,
         )
