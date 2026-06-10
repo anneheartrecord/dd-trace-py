@@ -20,6 +20,7 @@ from ddtrace import tracer
 from ddtrace.contrib.internal.pytorch import _c_tracer
 from ddtrace.contrib.internal.pytorch import _device
 from ddtrace.contrib.internal.trace_utils import ext_service
+from ddtrace.contrib.internal.trace_utils import int_service
 from ddtrace.internal.logger import get_logger
 from ddtrace.internal.settings import env
 
@@ -40,11 +41,9 @@ def _build_span(kwargs: dict[str, Any]) -> Optional[Any]:
     framework = kwargs["framework"]
     training_job_id = kwargs["training_job_id"]
     try:
-        import ddtrace as _ddtrace  # noqa: PLC0415
-
         span = tracer.start_span(
             "pytorch.rank",
-            service=_ddtrace.config.service or ext_service(None, config.pytorch),
+            service=int_service(None, config.pytorch, default="pytorch"),
             child_of=tracer.current_span(),
             activate=False,
         )
