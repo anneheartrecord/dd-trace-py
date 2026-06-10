@@ -282,10 +282,19 @@ def test_set_framework_updates_c_tracer_context(_fresh_rank_root):
 
 
 def _make_fake_lib_no_steps():
-    """A lib where set/clear are present but step symbols raise AttributeError."""
-    lib = _make_fake_lib()
-    type(lib).dd_training_step_begin = mock.PropertyMock(side_effect=AttributeError)
-    type(lib).dd_training_step_end = mock.PropertyMock(side_effect=AttributeError)
+    """A lib where set/clear are present but step symbols raise AttributeError.
+
+    Uses spec= so that accessing any attribute not listed raises AttributeError,
+    which is what ctypes.CDLL does for absent symbols.
+    """
+
+    class _LibWithoutSteps:
+        dd_set_global_parent_context = None
+        dd_clear_global_parent_context = None
+
+    lib = mock.MagicMock(spec=_LibWithoutSteps)
+    lib.dd_set_global_parent_context.restype = None
+    lib.dd_clear_global_parent_context.restype = None
     return lib
 
 
