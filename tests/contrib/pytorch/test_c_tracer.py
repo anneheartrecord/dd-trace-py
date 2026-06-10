@@ -274,3 +274,56 @@ def test_set_framework_updates_c_tracer_context(_fresh_rank_root):
         assert mc.set_parent_context.called
         args = mc.set_parent_context.call_args[0]
         assert args[1]["framework"] == "fsdp"
+
+
+# ---------------------------------------------------------------------------
+# Step signals: step_begin / step_end
+# ---------------------------------------------------------------------------
+
+
+def _make_fake_lib_no_steps():
+    """A lib where set/clear are present but step symbols raise AttributeError."""
+    lib = _make_fake_lib()
+    type(lib).dd_training_step_begin = mock.PropertyMock(side_effect=AttributeError)
+    type(lib).dd_training_step_end = mock.PropertyMock(side_effect=AttributeError)
+    return lib
+
+
+def test_step_begin_noop_when_symbol_absent():
+    mod = _fresh_module()
+    mod._loaded = False
+    with mock.patch("ctypes.CDLL", return_value=_make_fake_lib_no_steps()):
+        mod._load()
+        assert mod._step_begin_fn is None
+        mod.step_begin()  # must not raise
+
+
+def test_step_end_noop_when_symbol_absent():
+    mod = _fresh_module()
+    mod._loaded = False
+    with mock.patch("ctypes.CDLL", return_value=_make_fake_lib_no_steps()):
+        mod._load()
+        assert mod._step_end_fn is None
+        mod.step_end()  # must not raise
+
+
+def test_step_begin_calls_c_symbol():
+    mod = _fresh_module()
+    mod._loaded = False
+    fake_lib = _make_fake_lib()
+    with mock.patch("ctypes.CDLL", return_value=fake_lib):
+        mod._load()
+        assert mod._step_begin_fn is not None
+        mod.step_begin()
+        assert fake_lib.dd_training_step_begin.called
+
+
+def test_step_end_calls_c_symbol():
+    mod = _fresh_module()
+    mod._loaded = False
+    fake_lib = _make_fake_lib()
+    with mock.patch("ctypes.CDLL", return_value=fake_lib):
+        mod._load()
+        assert mod._step_end_fn is not None
+        mod.step_end()
+        assert fake_lib.dd_training_step_end.called

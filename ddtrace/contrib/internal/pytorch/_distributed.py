@@ -23,6 +23,7 @@ log = get_logger(__name__)
 
 _no_env_job_id_warned: bool = False
 _installed: bool = False
+_optimizer_wrapped: bool = False
 _fsdp_hook_registered: bool = False
 _deepspeed_hook_registered: bool = False
 
@@ -36,6 +37,10 @@ _bootstrap_lock = threading.Lock()
 _install_lock = threading.Lock()
 
 _cached_distributed_backend: Optional[str] = None
+
+
+def _step_profiling_enabled() -> bool:
+    return env.get("DD_TRAINING_STEP_PROFILING", "false").lower() in ("true", "1")
 
 # Wire-format env var names set by the Ray contrib on worker processes.
 # AIDEV-NOTE: duplicated from ddtrace.contrib.internal.ray intentionally —
@@ -53,13 +58,15 @@ def _reset_child_state() -> None:
         _no_env_job_id_warned, \
         _cached_distributed_backend, \
         _fsdp_hook_registered, \
-        _deepspeed_hook_registered
+        _deepspeed_hook_registered, \
+        _optimizer_wrapped
     _state.update({"bootstrapped": False, "job_id": None, "rank": 0, "world_size": 1})
     _bootstrap_lock = threading.Lock()
     _no_env_job_id_warned = False
     _cached_distributed_backend = None
     _fsdp_hook_registered = False
     _deepspeed_hook_registered = False
+    _optimizer_wrapped = False
 
 
 if hasattr(os, "register_at_fork"):
@@ -179,6 +186,14 @@ def _bootstrap_distributed() -> None:
     except Exception:
         log.exception("pytorch: rank-root span open failed")
 
+    if _step_profiling_enabled():
+        try:
+            from ddtrace.contrib.internal.pytorch import _c_tracer  # noqa: PLC0415
+
+            _c_tracer.step_begin()
+        except Exception:
+            log.debug("pytorch: step_begin after bootstrap failed", exc_info=True)
+
 
 def _wrapped_init_process_group(wrapped: Any, instance: Any, args: Any, kwargs: Any) -> Any:
     with _bootstrap_lock:
@@ -219,6 +234,13 @@ def _wrapped_destroy_process_group(wrapped: Any, instance: Any, args: Any, kwarg
         # Close the rank span only when the default (WORLD) process group is
         # destroyed. Subgroup destroys must not end the span.
         if _is_world_group(group):
+            if _step_profiling_enabled():
+                try:
+                    from ddtrace.contrib.internal.pytorch import _c_tracer  # noqa: PLC0415
+
+                    _c_tracer.step_end()
+                except Exception:
+                    log.debug("pytorch: step_end before rank-root close failed", exc_info=True)
             try:
                 from ddtrace.contrib.internal.pytorch import _rank_root  # noqa: PLC0415
 
@@ -364,6 +386,41 @@ def _uninstall_deepspeed() -> None:
         log.debug("pytorch: failed to unwrap deepspeed.initialize", exc_info=True)
 
 
+def _install_optimizer_step() -> None:
+    global _optimizer_wrapped
+    if _optimizer_wrapped or not _step_profiling_enabled():
+        return
+    if not hasattr(torch.optim, "Optimizer"):
+        return
+    try:
+        _wrap("torch.optim", "Optimizer.step", _wrapped_optimizer_step)
+        _optimizer_wrapped = True
+    except Exception:
+        log.debug("pytorch: failed to wrap Optimizer.step", exc_info=True)
+
+
+def _uninstall_optimizer_step() -> None:
+    global _optimizer_wrapped
+    if not _optimizer_wrapped:
+        return
+    if not hasattr(torch.optim, "Optimizer"):
+        return
+    try:
+        _unwrap(torch.optim.Optimizer, "step")
+    except Exception:
+        log.debug("pytorch: failed to unwrap Optimizer.step", exc_info=True)
+    _optimizer_wrapped = False
+
+
+def _wrapped_optimizer_step(wrapped: Any, instance: Any, args: Any, kwargs: Any) -> Any:
+    from ddtrace.contrib.internal.pytorch import _c_tracer  # noqa: PLC0415
+
+    _c_tracer.step_end()  # close step N: optimizer phase ends
+    result = wrapped(*args, **kwargs)
+    _c_tracer.step_begin()  # open step N+1: forward starts
+    return result
+
+
 def install() -> None:
     global _installed
     with _install_lock:
@@ -377,6 +434,7 @@ def install() -> None:
         _install_ddp()
         _install_fsdp()
         _install_deepspeed()
+        _install_optimizer_step()
     # Late-patch bootstrap: if init_process_group was called before patch(),
     # our wrapper will never fire. Run bootstrap now.
     if _distributed_available():
@@ -411,6 +469,7 @@ def uninstall() -> None:
             _uninstall_deepspeed()
             global _deepspeed_hook_registered
             _deepspeed_hook_registered = False
+            _uninstall_optimizer_step()
         try:
             from ddtrace.contrib.internal.pytorch import _device as _device_mod  # noqa: PLC0415
 

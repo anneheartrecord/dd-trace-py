@@ -19,11 +19,13 @@ _lib: Optional[ctypes.CDLL] = None
 _loaded: bool = False
 _set_fn: Optional[Callable[..., None]] = None
 _clear_fn: Optional[Callable[[], None]] = None
+_step_begin_fn: Optional[Callable[[], None]] = None
+_step_end_fn: Optional[Callable[[], None]] = None
 
 
 def _load() -> bool:
     """Bind to C tracer symbols already in the process namespace. Returns True on success."""
-    global _lib, _loaded, _set_fn, _clear_fn
+    global _lib, _loaded, _set_fn, _clear_fn, _step_begin_fn, _step_end_fn
     if _loaded:
         return _lib is not None
     _loaded = True
@@ -53,6 +55,20 @@ def _load() -> bool:
     except AttributeError:
         # C tracer not present in this process — no-op path.
         return False
+
+    # Step signals — only available in C tracer builds that include training.c.
+    # Silently absent means the heuristic NCCL-group-marker fallback activates.
+    try:
+        fn3 = lib.dd_training_step_begin
+        fn3.restype = None
+        fn3.argtypes = []
+        _step_begin_fn = fn3
+        fn4 = lib.dd_training_step_end
+        fn4.restype = None
+        fn4.argtypes = []
+        _step_end_fn = fn4
+    except AttributeError:
+        pass
 
     _lib = lib
     return True
@@ -109,3 +125,23 @@ def clear_parent_context() -> None:
         _clear_fn()
     except Exception:
         log.debug("pytorch: dd_clear_global_parent_context failed", exc_info=True)
+
+
+def step_begin() -> None:
+    """Signal start of a training step (forward pass begins). No-op when C tracer absent. Never raises."""
+    if not _load() or _step_begin_fn is None:
+        return
+    try:
+        _step_begin_fn()
+    except Exception:
+        log.debug("pytorch: dd_training_step_begin failed", exc_info=True)
+
+
+def step_end() -> None:
+    """Signal end of a training step (optimizer step complete). No-op when C tracer absent. Never raises."""
+    if not _load() or _step_end_fn is None:
+        return
+    try:
+        _step_end_fn()
+    except Exception:
+        log.debug("pytorch: dd_training_step_end failed", exc_info=True)
