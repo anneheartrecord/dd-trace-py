@@ -10,7 +10,6 @@ so partial data is visible during long runs. Rotated spans carry
 """
 
 import atexit
-import os
 import threading
 from typing import Any
 from typing import Optional
@@ -20,13 +19,15 @@ from ddtrace import tracer
 from ddtrace.contrib.internal.pytorch import _c_tracer
 from ddtrace.contrib.internal.pytorch import _device
 from ddtrace.contrib.internal.trace_utils import int_service
+from ddtrace.internal import forksafe
 from ddtrace.internal.logger import get_logger
 from ddtrace.internal.settings import env
+from ddtrace.internal.threads import Lock
 
 
 log = get_logger(__name__)
 
-_lock = threading.Lock()
+_lock = Lock()
 _span: Optional[Any] = None
 _atexit_registered = False
 _rotation_interval_s: int = 600
@@ -284,13 +285,14 @@ def open_rank_span(rank: int, world_size: int, framework: str, training_job_id: 
         if not _atexit_registered:
             atexit.register(close)
             _atexit_registered = True
-
-    _open_kwargs = {
-        "rank": rank,
-        "world_size": world_size,
-        "framework": framework,
-        "training_job_id": training_job_id,
-    }
+        # Set _open_kwargs under lock so the rotation timer always sees a
+        # consistent snapshot — _rotate_span reads it outside the lock.
+        _open_kwargs = {
+            "rank": rank,
+            "world_size": world_size,
+            "framework": framework,
+            "training_job_id": training_job_id,
+        }
 
     new_span = _build_span(_open_kwargs)
 
@@ -375,11 +377,15 @@ def _reset_child_state() -> None:
     # Clear inherited state; timer threads do not survive fork.
     global _span, _lock, _atexit_registered, _rotation_timer, _open_kwargs
     _span = None
-    _lock = threading.Lock()
+    _lock = Lock()
     _atexit_registered = False
     _rotation_timer = None
     _open_kwargs = {}
+    # Clear C tracer parent pointer — child must not inherit a dangling span ref.
+    try:
+        _c_tracer.clear_parent_context()
+    except Exception:  # nosec B110
+        pass
 
 
-if hasattr(os, "register_at_fork"):
-    os.register_at_fork(after_in_child=_reset_child_state)
+forksafe.register(_reset_child_state)

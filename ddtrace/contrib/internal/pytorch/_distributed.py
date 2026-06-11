@@ -2,7 +2,7 @@
 open and close the pytorch.rank lifetime span.
 """
 
-import os
+import contextvars
 import threading
 from typing import Any
 from typing import Optional
@@ -15,6 +15,8 @@ from ddtrace.contrib.internal.pytorch._utils import resolve_job_id_from_env
 from ddtrace.contrib.internal.pytorch._utils import set_cached_job_id
 from ddtrace.contrib.internal.trace_utils import unwrap as _unwrap
 from ddtrace.contrib.internal.trace_utils import wrap as _wrap
+from ddtrace.internal import core
+from ddtrace.internal import forksafe
 from ddtrace.internal.logger import get_logger
 from ddtrace.internal.settings import env
 
@@ -27,14 +29,12 @@ _optimizer_wrapped: bool = False
 _fsdp_hook_registered: bool = False
 _deepspeed_hook_registered: bool = False
 
-_state: dict[str, Any] = {
-    "bootstrapped": False,
-    "job_id": None,
-    "rank": 0,
-    "world_size": 1,
-}
-_bootstrap_lock = threading.Lock()
-_install_lock = threading.Lock()
+# Tracks the active ExecutionContext for the current distributed training session.
+# Presence (non-None) doubles as the "bootstrapped" flag.
+# AIDEV-NOTE: ContextVar is per-thread — safe because init/destroy_process_group always run on the same thread in DDP.
+_rank_ctx: contextvars.ContextVar[Optional[core.ExecutionContext[Any]]] = contextvars.ContextVar(
+    "pytorch_rank_ctx", default=None
+)
 
 _cached_distributed_backend: Optional[str] = None
 
@@ -53,16 +53,24 @@ _RAY_RUN_METADATA_ENV = "_DD_RAY_RUN_METADATA"
 
 
 def _reset_child_state() -> None:
-    # Mutate _state in place so by-reference imports see the reset.
     global \
-        _bootstrap_lock, \
         _no_env_job_id_warned, \
         _cached_distributed_backend, \
         _fsdp_hook_registered, \
         _deepspeed_hook_registered, \
         _optimizer_wrapped
-    _state.update({"bootstrapped": False, "job_id": None, "rank": 0, "world_size": 1})
-    _bootstrap_lock = threading.Lock()
+    ctx = _rank_ctx.get()
+    if ctx is not None:
+        _rank_ctx.set(None)
+        # AIDEV-NOTE: Deferred imports + manual reset — import system may be unsafe post-fork.
+        try:
+            from ddtrace.internal.core import _CURRENT_CONTEXT  # noqa: PLC0415
+            from ddtrace.internal.core import ROOT_CONTEXT_ID  # noqa: PLC0415
+            from ddtrace.internal.core import ExecutionContext  # noqa: PLC0415
+
+            _CURRENT_CONTEXT.set(ExecutionContext(ROOT_CONTEXT_ID))
+        except Exception:  # nosec B110
+            pass
     _no_env_job_id_warned = False
     _cached_distributed_backend = None
     _fsdp_hook_registered = False
@@ -70,8 +78,7 @@ def _reset_child_state() -> None:
     _optimizer_wrapped = False
 
 
-if hasattr(os, "register_at_fork"):
-    os.register_at_fork(after_in_child=_reset_child_state)
+forksafe.register(_reset_child_state)
 
 
 def _distributed_available() -> bool:
@@ -140,19 +147,18 @@ def _bootstrap_distributed() -> None:
 
     cached = get_cached_job_id()
     env_id_present = job_id_env_set()
-    if cached:
-        _state["job_id"] = cached
-    else:
-        _state["job_id"] = resolve_job_id_from_env()
+    job_id = cached or resolve_job_id_from_env()
 
+    rank: int = 0
+    world_size: int = 1
     try:
         if _distributed_available() and torch.distributed.is_initialized():
-            _state["rank"] = torch.distributed.get_rank()
-            _state["world_size"] = torch.distributed.get_world_size()
+            rank = torch.distributed.get_rank()
+            world_size = torch.distributed.get_world_size()
     except Exception:
         log.exception("pytorch: failed to capture rank/world_size; defaulting to single-rank")
 
-    publishable_job_id: Optional[str] = _state["job_id"]
+    publishable_job_id: Optional[str] = job_id
     if not cached and not env_id_present:
         publishable_job_id = None
         if not _no_env_job_id_warned:
@@ -173,14 +179,14 @@ def _bootstrap_distributed() -> None:
     from ddtrace.contrib.internal.pytorch import _rank_root  # noqa: PLC0415
 
     try:
-        _device.discover(local_rank=int(_state["rank"] or 0))
+        _device.discover(local_rank=rank)
     except Exception:
         log.exception("pytorch: device discovery failed")
 
     try:
         _rank_root.open_rank_span(
-            rank=int(_state["rank"] or 0),
-            world_size=int(_state["world_size"] or 1),
+            rank=rank,
+            world_size=world_size,
             framework="none",
             training_job_id=publishable_job_id,
         )
@@ -197,15 +203,16 @@ def _bootstrap_distributed() -> None:
 
 
 def _wrapped_init_process_group(wrapped: Any, instance: Any, args: Any, kwargs: Any) -> Any:
-    with _bootstrap_lock:
-        already = _state["bootstrapped"]
+    already = _rank_ctx.get() is not None
 
-    result = wrapped(*args, **kwargs)  # let exceptions propagate; do NOT mark bootstrapped yet
+    result = wrapped(*args, **kwargs)  # let exceptions propagate; do NOT open context yet
 
     if not already:
-        with _bootstrap_lock:
-            if not _state["bootstrapped"]:
-                _state["bootstrapped"] = True
+        ctx = core.context_with_data("pytorch.rank", _dispatch_end_event=False)  # type: ignore[no-untyped-call]
+        # AIDEV-NOTE: __enter__() updates _CURRENT_CONTEXT so child spans are parented here; _dispatch_end_event=False
+        # defers the ended event — dispatch_ended_event() + __exit__() are called in _wrapped_destroy_process_group.
+        ctx.__enter__()
+        _rank_ctx.set(ctx)
         try:
             _bootstrap_distributed()
         except Exception:
@@ -248,8 +255,11 @@ def _wrapped_destroy_process_group(wrapped: Any, instance: Any, args: Any, kwarg
                 _rank_root.close()
             except Exception:
                 log.debug("pytorch: rank-root close raised", exc_info=True)
-            with _bootstrap_lock:
-                _state["bootstrapped"] = False
+            ctx = _rank_ctx.get()
+            if ctx is not None:
+                ctx.dispatch_ended_event()
+                ctx.__exit__(None, None, None)
+                _rank_ctx.set(None)
             global _cached_distributed_backend
             _cached_distributed_backend = None
             try:
@@ -424,72 +434,70 @@ def _wrapped_optimizer_step(wrapped: Any, instance: Any, args: Any, kwargs: Any)
 
 def install() -> None:
     global _installed
-    with _install_lock:
-        if _installed:
-            return
-        _installed = True
-        if _distributed_available() and hasattr(torch.distributed, "init_process_group"):
-            _wrap("torch.distributed", "init_process_group", _wrapped_init_process_group)
-        if _distributed_available() and hasattr(torch.distributed, "destroy_process_group"):
-            _wrap("torch.distributed", "destroy_process_group", _wrapped_destroy_process_group)
-        _install_ddp()
-        _install_fsdp()
-        _install_deepspeed()
-        _install_optimizer_step()
+    if _installed:
+        return
+    _installed = True
+    if _distributed_available() and hasattr(torch.distributed, "init_process_group"):
+        _wrap("torch.distributed", "init_process_group", _wrapped_init_process_group)
+    if _distributed_available() and hasattr(torch.distributed, "destroy_process_group"):
+        _wrap("torch.distributed", "destroy_process_group", _wrapped_destroy_process_group)
+    _install_ddp()
+    _install_fsdp()
+    _install_deepspeed()
+    _install_optimizer_step()
     # Late-patch bootstrap: if init_process_group was called before patch(),
     # our wrapper will never fire. Run bootstrap now.
     if _distributed_available():
         try:
-            if torch.distributed.is_initialized():
-                with _bootstrap_lock:
-                    already = _state["bootstrapped"]
-                    if not already:
-                        _state["bootstrapped"] = True
-                if not already:
-                    _bootstrap_distributed()
+            if torch.distributed.is_initialized() and _rank_ctx.get() is None:
+                ctx = core.context_with_data("pytorch.rank", _dispatch_end_event=False)  # type: ignore[no-untyped-call]
+                ctx.__enter__()
+                _rank_ctx.set(ctx)
+                _bootstrap_distributed()
         except Exception:
             log.exception("pytorch: late-patch bootstrap failed")
 
 
 def uninstall() -> None:
-    global _installed
-    with _install_lock:
-        if _installed:
-            _installed = False
-            if _distributed_available():
-                for fn in ("destroy_process_group", "init_process_group"):
-                    if hasattr(torch.distributed, fn):
-                        try:
-                            _unwrap(torch.distributed, fn)
-                        except Exception:
-                            log.debug("pytorch: failed to unwrap torch.distributed.%s", fn, exc_info=True)
-            _uninstall_ddp()
-            _uninstall_fsdp()
-            global _fsdp_hook_registered
-            _fsdp_hook_registered = False
-            _uninstall_deepspeed()
-            global _deepspeed_hook_registered
-            _deepspeed_hook_registered = False
-            _uninstall_optimizer_step()
-        try:
-            from ddtrace.contrib.internal.pytorch import _device as _device_mod  # noqa: PLC0415
+    global _installed, _fsdp_hook_registered, _deepspeed_hook_registered
+    if _installed:
+        _installed = False
+        if _distributed_available():
+            for fn in ("destroy_process_group", "init_process_group"):
+                if hasattr(torch.distributed, fn):
+                    try:
+                        _unwrap(torch.distributed, fn)
+                    except Exception:
+                        log.debug("pytorch: failed to unwrap torch.distributed.%s", fn, exc_info=True)
+        _uninstall_ddp()
+        _uninstall_fsdp()
+        _fsdp_hook_registered = False
+        _uninstall_deepspeed()
+        _deepspeed_hook_registered = False
+        _uninstall_optimizer_step()
+    try:
+        from ddtrace.contrib.internal.pytorch import _device as _device_mod  # noqa: PLC0415
 
-            _device_mod._cache = None
-        except Exception:  # nosec B110
-            pass
-        try:
-            from ddtrace.contrib.internal.pytorch._utils import clear_cached_run_metadata  # noqa: PLC0415
+        _device_mod._cache = None
+    except Exception:  # nosec B110
+        pass
+    try:
+        from ddtrace.contrib.internal.pytorch._utils import clear_cached_run_metadata  # noqa: PLC0415
 
-            clear_cached_run_metadata()
-        except Exception:  # nosec B110
-            pass
+        clear_cached_run_metadata()
+    except Exception:  # nosec B110
+        pass
     try:
         from ddtrace.contrib.internal.pytorch import _rank_root  # noqa: PLC0415
 
         _rank_root.close()
     except Exception:
         log.debug("pytorch: rank-root close raised in uninstall", exc_info=True)
-    _state.update({"bootstrapped": False, "job_id": None, "rank": 0, "world_size": 1})
+    ctx = _rank_ctx.get()
+    if ctx is not None:
+        ctx.dispatch_ended_event()
+        ctx.__exit__(None, None, None)
+        _rank_ctx.set(None)
     try:
         from ddtrace.contrib.internal.pytorch import _utils as _utils_mod  # noqa: PLC0415
 

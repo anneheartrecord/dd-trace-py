@@ -53,13 +53,14 @@ def get_cached_job_id() -> Optional[str]:
 
 
 def get_rank() -> int:
-    """Return bootstrap-cached rank; falls back to 0 before init_process_group fires."""
+    """Return the current process rank from the RANK env var; falls back to 0."""
     try:
-        from ddtrace.contrib.internal.pytorch._distributed import _state  # noqa: PLC0415
-
-        return int(_state.get("rank", 0) or 0)
-    except Exception:
-        return 0
+        rank = env.get("RANK")
+        if rank:
+            return int(rank)
+    except Exception:  # nosec B110
+        pass
+    return 0
 
 
 def set_training_job_id_tag(span: Any) -> None:

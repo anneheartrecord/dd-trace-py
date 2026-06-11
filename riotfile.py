@@ -3167,6 +3167,18 @@ venv = Venv(
                         "torch": ["~=2.2.0", "~=2.3.0"],
                     },
                 ),
+                Venv(
+                    pys=select_pys(min_version="3.9", max_version="3.12"),
+                    pkgs={
+                        "torch": ["~=2.4.0", "~=2.5.0", "~=2.6.0", "~=2.7.0"],
+                    },
+                ),
+                Venv(
+                    pys=select_pys(min_version="3.12", max_version="3.12"),
+                    pkgs={
+                        "torch": ["~=2.8.0", "~=2.9.0", "~=2.10.0", "~=2.11.0", "~=2.12.0"],
+                    },
+                ),
             ],
         ),
         Venv(

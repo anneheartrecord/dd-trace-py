@@ -60,7 +60,7 @@ def test_explicit_patch_pytorch_true_still_works():
         unpatch()
 
 
-@pytest.mark.parametrize("bad_version", [(1, 9, 0), (2, 4, 0), (3, 0, 0)])
+@pytest.mark.parametrize("bad_version", [(1, 9, 0), (3, 0, 0)])
 def test_patch_skipped_for_unsupported_torch_version(monkeypatch, bad_version):
     import torch
 

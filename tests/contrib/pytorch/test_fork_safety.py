@@ -21,10 +21,7 @@ def _child_assert_fresh(q):
     # Verify parent's rank span and distributed bootstrap state were reset.
     try:
         assert _th.current_rank_span() is None, "rank span leaked into child"
-        assert _distributed._state["bootstrapped"] is False, "_state['bootstrapped'] leaked into child"
-        assert _distributed._state["job_id"] is None, "_state['job_id'] leaked into child"
-        assert _distributed._state["rank"] == 0, "_state['rank'] leaked into child"
-        assert _distributed._state["world_size"] == 1, "_state['world_size'] leaked into child"
+        assert _distributed._rank_ctx.get() is None, "_rank_ctx leaked into child"
         assert _device._cache is None, "_device._cache leaked into child"
         q.put("ok")
     except AssertionError as e:
@@ -42,7 +39,11 @@ def test_fork_resets_rank_root_and_bootstrap_state():
         _device.discover(local_rank=0)
     # Open a rank span and mark distributed as bootstrapped in the parent.
     _rank_root.open_rank_span(rank=0, world_size=1, framework="none", training_job_id="job-X")
-    _distributed._state.update({"bootstrapped": True})
+    from ddtrace.internal import core
+
+    fake_ctx = core.context_with_data("pytorch.rank", _dispatch_end_event=False)
+    fake_ctx.__enter__()
+    _distributed._rank_ctx.set(fake_ctx)
 
     ctx = mp.get_context("fork")
     q = ctx.Queue()
@@ -52,8 +53,10 @@ def test_fork_resets_rank_root_and_bootstrap_state():
     result = q.get(timeout=1)
 
     _rank_root.close()
-    # Restore _distributed._state so other tests are not affected.
-    _distributed._state.update({"bootstrapped": False})
+    # Restore _distributed._rank_ctx so other tests are not affected.
+    fake_ctx.dispatch_ended_event()
+    fake_ctx.__exit__(None, None, None)
+    _distributed._rank_ctx.set(None)
     assert result == "ok", result
 
 

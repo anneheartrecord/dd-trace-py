@@ -16,15 +16,15 @@ def get_version() -> str:
 
 
 def _supported_versions() -> dict[str, str]:
-    return {"torch": ">=2.0"}
+    return {"torch": ">=2.0,<3.0"}
 
 
 def patch() -> None:
     if getattr(torch, "_datadog_patch", False):
         return
-    if TORCH_VERSION < (2, 0, 0) or TORCH_VERSION >= (2, 4, 0):
+    if TORCH_VERSION < (2, 0, 0) or TORCH_VERSION >= (3, 0, 0):
         log.warning(
-            "pytorch: torch version %s is not supported (supported: >=2.0,<2.4); skipping instrumentation",
+            "pytorch: torch version %s is not supported (supported: >=2.0,<3.0); skipping instrumentation",
             torch.__version__,
         )
         return
