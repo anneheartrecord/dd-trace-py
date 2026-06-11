@@ -332,6 +332,10 @@ def _install_fsdp() -> None:
         if not _installed:
             return
         try:
+            import torch.distributed.fsdp as _fsdp  # noqa: PLC0415
+
+            if hasattr(_fsdp.FullyShardedDataParallel.__init__, "__wrapped__"):
+                return
             _wrap(
                 "torch.distributed.fsdp",
                 "FullyShardedDataParallel.__init__",
@@ -376,6 +380,8 @@ def _install_deepspeed() -> None:
         if not _installed:
             return
         if not hasattr(deepspeed, "initialize"):
+            return
+        if hasattr(deepspeed.initialize, "__wrapped__"):
             return
         try:
             _wrap("deepspeed", "initialize", _wrapped_deepspeed_init)

@@ -44,6 +44,7 @@ def _build_span(kwargs: dict[str, Any]) -> Optional[Any]:
         span = tracer.start_span(
             "pytorch.rank",
             service=int_service(None, config.pytorch, default="pytorch"),
+            child_of=tracer.current_span() if framework == "ray" else None,
             activate=False,
         )
     except Exception:
@@ -352,13 +353,15 @@ def close() -> None:
     try:
         _tag_ray_run_context(span)
         span.finish()
-        flush_thread = threading.Thread(
+        # Flush in a daemon thread so close() never stalls the caller
+        # (e.g. destroy_process_group). The thread is best-effort; on
+        # normal process exit atexit fires close() and the daemon gets
+        # a chance to complete before the interpreter shuts down.
+        threading.Thread(
             target=lambda: _safe_flush(tracer),
             name="dd-pytorch-rank-root-flush",
             daemon=True,
-        )
-        flush_thread.start()
-        flush_thread.join(timeout=2.0)
+        ).start()
     except Exception:
         log.exception("pytorch: rank-root span close failed")
     finally:
