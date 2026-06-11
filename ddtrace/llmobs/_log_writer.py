@@ -5,7 +5,7 @@ from typing import TypedDict  # noqa:F401
 
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.periodic import PeriodicService
-from ddtrace.internal.threads import RLock
+from ddtrace.internal.utils.threads import RLock
 
 
 logger = get_logger(__name__)

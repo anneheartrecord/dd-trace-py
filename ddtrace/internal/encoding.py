@@ -5,7 +5,7 @@ from typing import Any  # noqa:F401
 from typing import Optional
 
 from ddtrace.internal.settings._agent import config as agent_config  # noqa:F401
-from ddtrace.internal.threads import RLock
+from ddtrace.internal.utils.threads import RLock
 
 from ._encoding import BufferedEncoder
 from ._encoding import BufferFull

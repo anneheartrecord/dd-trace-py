@@ -7,7 +7,7 @@ from ddtrace.debugging._probe.model import Probe
 from ddtrace.debugging._probe.model import ProbeLocationMixin
 from ddtrace.debugging._probe.status import ProbeStatusLogger
 from ddtrace.internal.utils.logger import get_logger
-from ddtrace.internal.threads import RLock
+from ddtrace.internal.utils.threads import RLock
 
 
 logger = get_logger(__name__)

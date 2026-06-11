@@ -6,7 +6,7 @@ from ddtrace._trace.processor import SpanProcessor
 from ddtrace._trace.span import Span  # noqa:F401
 from ddtrace.ext import SpanTypes
 from ddtrace.internal.utils.compat import ensure_text
-from ddtrace.internal.threads import Lock
+from ddtrace.internal.utils.threads import Lock
 
 
 EndpointCountsType = dict[str, int]

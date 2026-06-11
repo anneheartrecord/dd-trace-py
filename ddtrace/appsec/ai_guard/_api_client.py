@@ -14,7 +14,7 @@ from ddtrace.appsec._trace_utils import _aiguard_manual_keep
 from ddtrace.ext import http
 from ddtrace.internal.utils import core
 from ddtrace.internal import telemetry
-from ddtrace.internal._exceptions import DDBlockException
+from ddtrace.internal.utils._exceptions import DDBlockException
 import ddtrace.internal.utils.logger as ddlogger
 from ddtrace.internal.settings.asm import ai_guard_config
 from ddtrace.internal.telemetry import TELEMETRY_NAMESPACE

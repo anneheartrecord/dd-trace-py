@@ -19,7 +19,7 @@ from ddtrace.debugging._signal.snapshot import Snapshot
 from ddtrace.internal import process_tags
 from ddtrace.internal._encoding import BufferFull
 from ddtrace.internal.utils.logger import get_logger
-from ddtrace.internal.threads import RLock
+from ddtrace.internal.utils.threads import RLock
 from ddtrace.internal.utils.formats import format_trace_id
 
 

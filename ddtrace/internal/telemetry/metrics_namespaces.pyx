@@ -6,7 +6,7 @@ from typing import Tuple
 
 from ddtrace.internal.telemetry.constants import TELEMETRY_NAMESPACE
 from ddtrace.internal.telemetry.constants import TELEMETRY_EVENT_TYPE
-from ddtrace.internal.threads import Lock
+from ddtrace.internal.utils.threads import Lock
 
 
 MetricTagType = Optional[Tuple[Tuple[str, str], ...]]

@@ -9,7 +9,7 @@ from ddtrace.contrib.internal.langchain.utils import shared_stream
 from ddtrace.contrib.internal.trace_utils import unwrap
 from ddtrace.contrib.internal.trace_utils import wrap
 from ddtrace.internal.utils import core
-from ddtrace.internal._exceptions import DDBlockException
+from ddtrace.internal.utils._exceptions import DDBlockException
 from ddtrace.internal.utils.compat import is_wrapted
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.utils import ArgumentError

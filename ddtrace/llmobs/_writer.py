@@ -21,7 +21,7 @@ from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.periodic import PeriodicService
 from ddtrace.internal.settings import env
 from ddtrace.internal.settings._agent import config as agent_config
-from ddtrace.internal.threads import RLock
+from ddtrace.internal.utils.threads import RLock
 from ddtrace.internal.utils.http import Response
 from ddtrace.internal.utils.retry import RetryError
 from ddtrace.internal.utils.retry import fibonacci_backoff_with_jitter

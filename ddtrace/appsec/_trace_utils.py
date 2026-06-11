@@ -15,7 +15,7 @@ from ddtrace.constants import USER_KEEP
 from ddtrace.contrib.internal.trace_utils_base import set_user
 from ddtrace.ext import user
 from ddtrace.internal.utils import core
-from ddtrace.internal._exceptions import BlockingException
+from ddtrace.internal.utils._exceptions import BlockingException
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.settings.asm import config as asm_config
 

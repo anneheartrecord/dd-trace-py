@@ -2,7 +2,7 @@ import abc
 import enum
 import typing  # noqa:F401
 
-from ddtrace.internal.threads import Lock
+from ddtrace.internal.utils.threads import Lock
 
 
 class ServiceStatus(enum.Enum):

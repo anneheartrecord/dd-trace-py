@@ -21,7 +21,7 @@ from ddtrace.internal.settings import env
 from ddtrace.internal.settings._config import config
 from ddtrace.internal.settings._telemetry import config as telemetry_config
 from ddtrace.internal.settings.asm import config as asm_config
-from ddtrace.internal.threads import RLock
+from ddtrace.internal.utils.threads import RLock
 from ddtrace.internal.utils import get_argument_value
 from ddtrace.internal.utils import set_argument_value
 from ddtrace.trace import tracer

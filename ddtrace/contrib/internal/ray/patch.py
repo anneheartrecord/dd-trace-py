@@ -19,7 +19,7 @@ from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.utils.module import ModuleWatchdog
 from ddtrace.internal.settings import env
 from ddtrace.internal.telemetry import get_config as _get_config
-from ddtrace.internal.threads import Lock
+from ddtrace.internal.utils.threads import Lock
 from ddtrace.internal.utils import get_argument_value
 from ddtrace.internal.utils.formats import asbool
 

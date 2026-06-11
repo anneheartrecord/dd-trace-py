@@ -20,7 +20,7 @@ from ddtrace.internal.utils.compat import NO_EXCEPTION
 from ddtrace.internal.utils.compat import ExcInfoType
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.safety import _isinstance
-from ddtrace.internal.threads import RLock
+from ddtrace.internal.utils.threads import RLock
 from ddtrace.internal.wrapping.context import LazyWrappingContext
 
 

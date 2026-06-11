@@ -29,7 +29,7 @@ from ddtrace._trace.span import Span
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.telemetry import telemetry_writer
 from ddtrace.internal.telemetry.constants import TELEMETRY_NAMESPACE
-from ddtrace.internal.threads import Lock
+from ddtrace.internal.utils.threads import Lock
 from ddtrace.propagation.http import HTTP_HEADER_PARENT_ID
 from ddtrace.propagation.http import HTTPPropagator
 from ddtrace.propagation.http import _DatadogMultiHeader

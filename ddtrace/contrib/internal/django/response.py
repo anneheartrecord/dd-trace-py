@@ -23,8 +23,8 @@ from ddtrace.ext import SpanKind
 from ddtrace.ext import SpanTypes
 from ddtrace.ext import http
 from ddtrace.internal.utils import core
-from ddtrace.internal._exceptions import BlockingException
-from ddtrace.internal._exceptions import find_exception
+from ddtrace.internal.utils._exceptions import BlockingException
+from ddtrace.internal.utils._exceptions import find_exception
 from ddtrace.internal.utils.constants import COMPONENT
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.utils.schema import schematize_url_operation
