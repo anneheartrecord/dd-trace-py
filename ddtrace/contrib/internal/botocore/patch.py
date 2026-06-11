@@ -29,10 +29,10 @@ from ddtrace.ext import SpanTypes
 from ddtrace.internal import core
 from ddtrace.internal.utils.constants import COMPONENT
 from ddtrace.internal.utils.logger import get_logger
-from ddtrace.internal.schema import schematize_cloud_api_operation
-from ddtrace.internal.schema import schematize_cloud_faas_operation
-from ddtrace.internal.schema import schematize_cloud_messaging_operation
-from ddtrace.internal.schema import schematize_service_name
+from ddtrace.internal.utils.schema import schematize_cloud_api_operation
+from ddtrace.internal.utils.schema import schematize_cloud_faas_operation
+from ddtrace.internal.utils.schema import schematize_cloud_messaging_operation
+from ddtrace.internal.utils.schema import schematize_service_name
 from ddtrace.internal.settings import env
 from ddtrace.internal.settings._config import Config
 from ddtrace.internal.utils import get_argument_value

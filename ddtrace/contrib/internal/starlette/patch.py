@@ -19,7 +19,7 @@ from ddtrace.internal._exceptions import BlockingException
 from ddtrace.internal.utils.compat import is_wrapted
 from ddtrace.internal.endpoints import endpoint_collection
 from ddtrace.internal.utils.logger import get_logger
-from ddtrace.internal.schema import schematize_service_name
+from ddtrace.internal.utils.schema import schematize_service_name
 from ddtrace.internal.settings import env
 from ddtrace.internal.settings.asm import config as asm_config
 from ddtrace.internal.telemetry import get_config as _get_config

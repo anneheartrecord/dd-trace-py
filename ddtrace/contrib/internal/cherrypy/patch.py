@@ -14,9 +14,9 @@ from ddtrace.constants import ERROR_TYPE
 from ddtrace.contrib import trace_utils
 from ddtrace.ext import SpanTypes
 from ddtrace.internal import core
-from ddtrace.internal.schema import SpanDirection
-from ddtrace.internal.schema import schematize_service_name
-from ddtrace.internal.schema import schematize_url_operation
+from ddtrace.internal.utils.schema import SpanDirection
+from ddtrace.internal.utils.schema import schematize_service_name
+from ddtrace.internal.utils.schema import schematize_url_operation
 from ddtrace.internal.settings import env
 from ddtrace.internal.utils.deprecations import DDTraceDeprecationWarning
 from ddtrace.internal.utils.formats import asbool

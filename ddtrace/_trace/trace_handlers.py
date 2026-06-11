@@ -76,7 +76,7 @@ from ddtrace.internal.utils.constants import SPAN_LINK_KIND
 from ddtrace.internal.hostname import get_hostname
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.sampling import _inherit_sampling_tags
-from ddtrace.internal.schema.span_attribute_schema import SpanDirection
+from ddtrace.internal.utils.schema.span_attribute_schema import SpanDirection
 from ddtrace.propagation.http import HTTPPropagator
 from ddtrace.propagation.http import _extract_header_value
 from ddtrace.trace import tracer

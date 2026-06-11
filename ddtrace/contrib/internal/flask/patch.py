@@ -12,9 +12,9 @@ from ddtrace.internal import core
 from ddtrace.internal.utils.constants import COMPONENT
 from ddtrace.internal.endpoints import endpoint_collection
 from ddtrace.internal.packages import get_version_for_package
-from ddtrace.internal.schema import schematize_service_name
-from ddtrace.internal.schema import schematize_url_operation
-from ddtrace.internal.schema.span_attribute_schema import SpanDirection
+from ddtrace.internal.utils.schema import schematize_service_name
+from ddtrace.internal.utils.schema import schematize_url_operation
+from ddtrace.internal.utils.schema.span_attribute_schema import SpanDirection
 from ddtrace.internal.settings.asm import config as asm_config
 from ddtrace.internal.utils import get_blocked
 

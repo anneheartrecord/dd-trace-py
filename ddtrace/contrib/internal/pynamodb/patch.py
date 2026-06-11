@@ -16,8 +16,8 @@ from ddtrace.ext import SpanKind
 from ddtrace.ext import SpanTypes
 from ddtrace.ext import db
 from ddtrace.internal.utils.constants import COMPONENT
-from ddtrace.internal.schema import schematize_cloud_api_operation
-from ddtrace.internal.schema import schematize_service_name
+from ddtrace.internal.utils.schema import schematize_cloud_api_operation
+from ddtrace.internal.utils.schema import schematize_service_name
 from ddtrace.internal.utils import ArgumentError
 from ddtrace.internal.utils import get_argument_value
 from ddtrace.internal.utils.formats import deep_getattr

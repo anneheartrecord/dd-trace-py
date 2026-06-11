@@ -5,7 +5,7 @@ import wrapt
 from ddtrace import config
 from ddtrace.contrib.internal.trace_utils import ext_service
 from ddtrace.internal.utils.logger import get_logger
-from ddtrace.internal.schema import schematize_service_name
+from ddtrace.internal.utils.schema import schematize_service_name
 from ddtrace.llmobs._integrations import BedrockIntegration
 
 

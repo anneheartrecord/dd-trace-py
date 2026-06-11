@@ -18,9 +18,9 @@ from ddtrace.internal.utils.constants import COMPONENT
 from ddtrace.internal.utils.constants import MESSAGING_DESTINATION_NAME
 from ddtrace.internal.utils.constants import MESSAGING_SYSTEM
 from ddtrace.internal.utils.logger import get_logger
-from ddtrace.internal.schema import schematize_messaging_operation
-from ddtrace.internal.schema import schematize_service_name
-from ddtrace.internal.schema.span_attribute_schema import SpanDirection
+from ddtrace.internal.utils.schema import schematize_messaging_operation
+from ddtrace.internal.utils.schema import schematize_service_name
+from ddtrace.internal.utils.schema.span_attribute_schema import SpanDirection
 from ddtrace.internal.settings import env
 from ddtrace.internal.utils import ArgumentError
 from ddtrace.internal.utils import get_argument_value

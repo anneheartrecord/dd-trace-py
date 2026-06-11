@@ -10,7 +10,7 @@ from ddtrace.internal import core
 from ddtrace.internal.utils.compat import is_wrapted
 from ddtrace.internal.utils.constants import COMPONENT
 from ddtrace.internal.utils.logger import get_logger
-from ddtrace.internal.schema import schematize_service_name
+from ddtrace.internal.utils.schema import schematize_service_name
 
 # project
 from ddtrace.trace import tracer

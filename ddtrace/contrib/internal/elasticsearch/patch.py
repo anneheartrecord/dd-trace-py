@@ -21,7 +21,7 @@ from ddtrace.ext import http
 from ddtrace.ext import net
 from ddtrace.internal.utils.constants import COMPONENT
 from ddtrace.internal.utils.logger import get_logger
-from ddtrace.internal.schema import schematize_service_name
+from ddtrace.internal.utils.schema import schematize_service_name
 from ddtrace.internal.utils.wrappers import unwrap as _u
 from ddtrace.trace import tracer
 

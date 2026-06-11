@@ -14,7 +14,7 @@ from ddtrace.ext import net
 from ddtrace.ext import sql as sqlx
 from ddtrace.internal.utils.compat import is_wrapted
 from ddtrace.internal.utils.logger import get_logger
-from ddtrace.internal.schema import schematize_service_name
+from ddtrace.internal.utils.schema import schematize_service_name
 from ddtrace.internal.settings.integration import IntegrationConfig
 from ddtrace.internal.utils.cache import cached
 from ddtrace.internal.wrapping import is_wrapped_with

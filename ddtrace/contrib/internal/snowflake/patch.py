@@ -6,7 +6,7 @@ from ddtrace.contrib.dbapi import TracedCursor
 from ddtrace.contrib.internal.trace_utils import unwrap
 from ddtrace.ext import db
 from ddtrace.ext import net
-from ddtrace.internal.schema import schematize_service_name
+from ddtrace.internal.utils.schema import schematize_service_name
 from ddtrace.internal.settings import env
 from ddtrace.internal.utils.formats import asbool
 

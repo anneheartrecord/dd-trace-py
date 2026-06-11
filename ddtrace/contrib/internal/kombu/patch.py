@@ -15,9 +15,9 @@ from ddtrace.ext import SpanTypes
 from ddtrace.ext import kombu as kombux
 from ddtrace.internal import core
 from ddtrace.internal.utils.constants import COMPONENT
-from ddtrace.internal.schema import schematize_messaging_operation
-from ddtrace.internal.schema import schematize_service_name
-from ddtrace.internal.schema.span_attribute_schema import SpanDirection
+from ddtrace.internal.utils.schema import schematize_messaging_operation
+from ddtrace.internal.utils.schema import schematize_service_name
+from ddtrace.internal.utils.schema.span_attribute_schema import SpanDirection
 from ddtrace.internal.settings import env
 from ddtrace.internal.utils import get_argument_value
 from ddtrace.internal.utils.formats import asbool

@@ -14,8 +14,8 @@ from ddtrace.ext import SpanKind
 from ddtrace.ext import SpanTypes
 from ddtrace.internal import core
 from ddtrace.internal.utils.constants import COMPONENT
-from ddtrace.internal.schema import schematize_url_operation
-from ddtrace.internal.schema.span_attribute_schema import SpanDirection
+from ddtrace.internal.utils.schema import schematize_url_operation
+from ddtrace.internal.utils.schema.span_attribute_schema import SpanDirection
 from ddtrace.trace import tracer
 
 

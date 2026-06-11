@@ -6,7 +6,7 @@ from ddtrace import config
 from ddtrace._trace.pin import Pin
 from ddtrace.contrib.internal.trace_utils import unwrap as _u
 from ddtrace.ext import azure_servicebus as azure_servicebusx
-from ddtrace.internal.schema import schematize_service_name
+from ddtrace.internal.utils.schema import schematize_service_name
 from ddtrace.internal.settings._config import _get_config
 from ddtrace.internal.utils.formats import asbool
 

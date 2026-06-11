@@ -5,7 +5,7 @@ from ddtrace import config
 from ddtrace.contrib.internal.redis_utils import _instrument_redis_cmd
 from ddtrace.contrib.internal.redis_utils import _instrument_redis_execute_pipeline
 from ddtrace.contrib.internal.redis_utils import _run_redis_command_async
-from ddtrace.internal.schema import schematize_service_name
+from ddtrace.internal.utils.schema import schematize_service_name
 from ddtrace.internal.settings import env
 from ddtrace.internal.utils.deprecations import DDTraceDeprecationWarning
 from ddtrace.internal.utils.formats import CMD_MAX_LEN

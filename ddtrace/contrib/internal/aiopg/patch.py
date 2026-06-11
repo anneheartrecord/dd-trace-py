@@ -10,7 +10,7 @@ from ddtrace.contrib.internal.psycopg.connection import patch_conn as psycopg_pa
 from ddtrace.contrib.internal.psycopg.extensions import _patch_extensions
 from ddtrace.contrib.internal.psycopg.extensions import _unpatch_extensions
 from ddtrace.internal.utils.compat import is_wrapted
-from ddtrace.internal.schema import schematize_service_name
+from ddtrace.internal.utils.schema import schematize_service_name
 from ddtrace.internal.utils.wrappers import unwrap as _u
 
 

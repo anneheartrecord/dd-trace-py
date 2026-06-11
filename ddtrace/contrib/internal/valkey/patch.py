@@ -8,7 +8,7 @@ from ddtrace.contrib.internal.valkey_utils import ROW_RETURNING_COMMANDS
 from ddtrace.contrib.internal.valkey_utils import determine_row_count
 from ddtrace.contrib.trace_utils import unwrap
 from ddtrace.internal import core
-from ddtrace.internal.schema import schematize_service_name
+from ddtrace.internal.utils.schema import schematize_service_name
 from ddtrace.internal.settings import env
 from ddtrace.internal.utils.formats import CMD_MAX_LEN
 from ddtrace.internal.utils.formats import asbool

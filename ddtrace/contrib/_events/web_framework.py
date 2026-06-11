@@ -7,8 +7,8 @@ from ddtrace.contrib._events.http import HttpRequestBaseEvent
 from ddtrace.ext import SpanKind
 from ddtrace.ext import SpanTypes
 from ddtrace.internal.core.events import event_field
-from ddtrace.internal.schema import SpanDirection
-from ddtrace.internal.schema import schematize_url_operation
+from ddtrace.internal.utils.schema import SpanDirection
+from ddtrace.internal.utils.schema import schematize_url_operation
 
 
 class WebFrameworkEvents(str, Enum):

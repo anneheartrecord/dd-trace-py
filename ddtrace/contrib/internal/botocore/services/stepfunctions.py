@@ -9,9 +9,9 @@ from ddtrace.contrib.internal.trace_utils import ext_service
 from ddtrace.ext import SpanTypes
 from ddtrace.internal import core
 from ddtrace.internal.utils.logger import get_logger
-from ddtrace.internal.schema import SpanDirection
-from ddtrace.internal.schema import schematize_cloud_messaging_operation
-from ddtrace.internal.schema import schematize_service_name
+from ddtrace.internal.utils.schema import SpanDirection
+from ddtrace.internal.utils.schema import schematize_cloud_messaging_operation
+from ddtrace.internal.utils.schema import schematize_service_name
 
 
 log = get_logger(__name__)

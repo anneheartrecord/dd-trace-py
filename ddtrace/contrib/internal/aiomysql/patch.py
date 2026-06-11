@@ -15,8 +15,8 @@ from ddtrace.ext import db
 from ddtrace.ext import net
 from ddtrace.internal import core
 from ddtrace.internal.utils.constants import COMPONENT
-from ddtrace.internal.schema import schematize_database_operation
-from ddtrace.internal.schema import schematize_service_name
+from ddtrace.internal.utils.schema import schematize_database_operation
+from ddtrace.internal.utils.schema import schematize_service_name
 from ddtrace.internal.utils.wrappers import unwrap
 from ddtrace.propagation._database_monitoring import _DBM_Propagator
 from ddtrace.trace import tracer

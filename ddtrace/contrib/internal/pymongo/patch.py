@@ -7,7 +7,7 @@ from ddtrace.internal.utils.formats import asbool
 from ddtrace.propagation._database_monitoring import _DBM_Propagator
 from ddtrace.vendor.sqlcommenter import _generate_comment_from_metadata as _generate_comment_from_metadata
 
-from ....internal.schema import schematize_service_name
+from ....internal.utils.schema import schematize_service_name
 from .client import patch_pymongo_sync_modules
 from .client import unpatch_pymongo_sync_modules
 from .utils import dbm_comment_injector

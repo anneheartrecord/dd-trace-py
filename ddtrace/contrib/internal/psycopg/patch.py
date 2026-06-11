@@ -15,8 +15,8 @@ from ddtrace.contrib.internal.psycopg.cursor import Psycopg3TracedCursor
 from ddtrace.contrib.internal.psycopg.extensions import _patch_extensions
 from ddtrace.contrib.internal.psycopg.extensions import _unpatch_extensions
 from ddtrace.contrib.internal.psycopg.extensions import get_psycopg2_extensions
-from ddtrace.internal.schema import schematize_database_operation
-from ddtrace.internal.schema import schematize_service_name
+from ddtrace.internal.utils.schema import schematize_database_operation
+from ddtrace.internal.utils.schema import schematize_service_name
 from ddtrace.internal.settings import env
 from ddtrace.internal.utils.formats import asbool
 from ddtrace.internal.utils.wrappers import unwrap as _u

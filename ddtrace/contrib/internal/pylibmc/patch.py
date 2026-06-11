@@ -2,7 +2,7 @@ import pylibmc
 
 from ddtrace import config
 from ddtrace.ext import memcached
-from ddtrace.internal.schema import schematize_service_name
+from ddtrace.internal.utils.schema import schematize_service_name
 
 from .client import TracedClient
 
