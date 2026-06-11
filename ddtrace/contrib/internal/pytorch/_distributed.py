@@ -164,9 +164,10 @@ def _bootstrap_distributed() -> None:
         if not _no_env_job_id_warned:
             log.warning(
                 "pytorch: no shared training job id resolved from env "
-                "(RAY_JOB_ID, TORCHELASTIC_RUN_ID, KUBEFLOW_TRAINING_JOB_ID, "
-                "SLURM_JOB_ID). Cross-rank trace correlation will be DISABLED "
-                "for this run — spans will not carry the training_job.id tag."
+                "(DD_PYTORCH_JOB_ID, RAY_JOB_ID, TORCHELASTIC_RUN_ID, "
+                "KUBEFLOW_TRAINING_JOB_ID, SLURM_JOB_ID). Cross-rank trace "
+                "correlation will be DISABLED for this run — spans will not "
+                "carry the training_job.id tag."
             )
             _no_env_job_id_warned = True
 
