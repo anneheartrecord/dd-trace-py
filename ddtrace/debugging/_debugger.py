@@ -53,7 +53,7 @@ from ddtrace.internal.rate_limiter import BudgetRateLimiterWithJitter as RateLim
 from ddtrace.internal.remoteconfig.worker import remoteconfig_poller
 from ddtrace.internal.service import Service
 from ddtrace.internal.telemetry import telemetry_writer
-from ddtrace.internal.wrapping.context import WrappingContext
+from ddtrace.internal.utils.wrapping.context import WrappingContext
 from ddtrace.trace import Tracer
 
 

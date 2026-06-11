@@ -16,7 +16,7 @@ from ddtrace.internal.datadog.profiling import stack
 from ddtrace.internal.utils.module import ModuleWatchdog
 from ddtrace.internal.settings.profiling import config
 from ddtrace.internal.utils import get_argument_value
-from ddtrace.internal.wrapping import wrap
+from ddtrace.internal.utils.wrapping import wrap
 
 
 ASYNCIO_IMPORTED: bool = False

@@ -17,8 +17,8 @@ from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.utils.schema import schematize_service_name
 from ddtrace.internal.settings.integration import IntegrationConfig
 from ddtrace.internal.utils.cache import cached
-from ddtrace.internal.wrapping import is_wrapped_with
-from ddtrace.internal.wrapping import wrap
+from ddtrace.internal.utils.wrapping import is_wrapped_with
+from ddtrace.internal.utils.wrapping import wrap
 from ddtrace.propagation._database_monitoring import _DBM_Propagator
 
 

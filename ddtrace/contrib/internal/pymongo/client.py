@@ -20,8 +20,8 @@ from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.utils.schema import schematize_database_operation
 from ddtrace.internal.utils.schema import schematize_service_name
 from ddtrace.internal.utils import get_argument_value
-from ddtrace.internal.wrapping import unwrap as _u
-from ddtrace.internal.wrapping import wrap as _w
+from ddtrace.internal.utils.wrapping import unwrap as _u
+from ddtrace.internal.utils.wrapping import wrap as _w
 from ddtrace.trace import tracer
 
 from .parse import parse_msg

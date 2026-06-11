@@ -12,9 +12,9 @@ from ddtrace.internal.utils.constants import COMPONENT
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.settings.integration import IntegrationConfig
 from ddtrace.internal.utils.importlib import func_name
-from ddtrace.internal.wrapping import is_wrapped_with
-from ddtrace.internal.wrapping import unwrap
-from ddtrace.internal.wrapping import wrap
+from ddtrace.internal.utils.wrapping import is_wrapped_with
+from ddtrace.internal.utils.wrapping import unwrap
+from ddtrace.internal.utils.wrapping import wrap
 
 
 T = TypeVar("T")

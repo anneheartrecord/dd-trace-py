@@ -14,7 +14,7 @@ from weakref import WeakValueDictionary as wvdict
 
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.utils import get_argument_value
-from ddtrace.internal.wrapping.context import WrappingContext
+from ddtrace.internal.utils.wrapping.context import WrappingContext
 
 
 if t.TYPE_CHECKING:

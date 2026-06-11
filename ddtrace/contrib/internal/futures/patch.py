@@ -1,7 +1,7 @@
 import sys
 
-from ddtrace.internal.wrapping import unwrap as _u
-from ddtrace.internal.wrapping import wrap as _w
+from ddtrace.internal.utils.wrapping import unwrap as _u
+from ddtrace.internal.utils.wrapping import wrap as _w
 
 from .threading import _wrap_submit
 

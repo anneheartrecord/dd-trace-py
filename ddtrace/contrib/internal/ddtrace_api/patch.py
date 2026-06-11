@@ -10,7 +10,7 @@ import ddtrace
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.telemetry import telemetry_writer
 from ddtrace.internal.telemetry.constants import TELEMETRY_NAMESPACE
-from ddtrace.internal.wrapping.context import WrappingContext
+from ddtrace.internal.utils.wrapping.context import WrappingContext
 
 
 _DD_HOOK_NAME = "dd.hook"

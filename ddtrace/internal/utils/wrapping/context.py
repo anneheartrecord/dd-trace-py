@@ -16,13 +16,13 @@ from ddtrace.internal.assembly import Assembly
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.utils.threads import Lock
 from ddtrace.internal.utils.inspection import link_function_to_code
-from ddtrace.internal.wrapping import WrappedFunction
-from ddtrace.internal.wrapping import Wrapper
-from ddtrace.internal.wrapping import get_function_code
-from ddtrace.internal.wrapping import is_wrapped_with
-from ddtrace.internal.wrapping import set_function_code
-from ddtrace.internal.wrapping import unwrap
-from ddtrace.internal.wrapping import wrap
+from ddtrace.internal.utils.wrapping import WrappedFunction
+from ddtrace.internal.utils.wrapping import Wrapper
+from ddtrace.internal.utils.wrapping import get_function_code
+from ddtrace.internal.utils.wrapping import is_wrapped_with
+from ddtrace.internal.utils.wrapping import set_function_code
+from ddtrace.internal.utils.wrapping import unwrap
+from ddtrace.internal.utils.wrapping import wrap
 
 
 log = get_logger(__name__)

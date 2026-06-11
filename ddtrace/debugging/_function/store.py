@@ -10,9 +10,9 @@ from ddtrace.internal.bytecode_injection import HookInfoType
 from ddtrace.internal.bytecode_injection import HookType
 from ddtrace.internal.bytecode_injection import eject_hooks
 from ddtrace.internal.bytecode_injection import inject_hooks
-from ddtrace.internal.wrapping import get_function_code
-from ddtrace.internal.wrapping.context import ContextWrappedFunction
-from ddtrace.internal.wrapping.context import WrappingContext
+from ddtrace.internal.utils.wrapping import get_function_code
+from ddtrace.internal.utils.wrapping.context import ContextWrappedFunction
+from ddtrace.internal.utils.wrapping.context import WrappingContext
 
 
 WrapperType = Callable[[FunctionType, Any, Any, Any], Any]

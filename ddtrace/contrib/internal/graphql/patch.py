@@ -33,8 +33,8 @@ from ddtrace.internal.utils import get_argument_value
 from ddtrace.internal.utils import set_argument_value
 from ddtrace.internal.utils.formats import asbool
 from ddtrace.internal.utils.version import parse_version
-from ddtrace.internal.wrapping import unwrap
-from ddtrace.internal.wrapping import wrap
+from ddtrace.internal.utils.wrapping import unwrap
+from ddtrace.internal.utils.wrapping import wrap
 from ddtrace.trace import Span
 from ddtrace.trace import tracer
 

@@ -15,9 +15,9 @@ from ddtrace.internal.settings.asm import config as asm_config
 from ddtrace.internal.settings.integration import IntegrationConfig
 from ddtrace.internal.utils import get_argument_value
 from ddtrace.internal.utils.importlib import func_name
-from ddtrace.internal.wrapping import is_wrapped
-from ddtrace.internal.wrapping import is_wrapped_with
-from ddtrace.internal.wrapping import wrap
+from ddtrace.internal.utils.wrapping import is_wrapped
+from ddtrace.internal.utils.wrapping import is_wrapped_with
+from ddtrace.internal.utils.wrapping import wrap
 
 
 log = get_logger(__name__)

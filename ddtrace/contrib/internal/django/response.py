@@ -35,9 +35,9 @@ from ddtrace.internal.utils import get_argument_value
 from ddtrace.internal.utils import get_blocked
 from ddtrace.internal.utils import http as http_utils
 from ddtrace.internal.utils import set_blocked
-from ddtrace.internal.wrapping import is_wrapped_with
-from ddtrace.internal.wrapping import unwrap
-from ddtrace.internal.wrapping import wrap
+from ddtrace.internal.utils.wrapping import is_wrapped_with
+from ddtrace.internal.utils.wrapping import unwrap
+from ddtrace.internal.utils.wrapping import wrap
 
 from . import utils
 

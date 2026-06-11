@@ -22,7 +22,7 @@ from ddtrace.internal.utils.inspection import functions_for_code
 from ddtrace.internal.utils.inspection import linenos
 from ddtrace.internal.utils.inspection import resolved_code_origin
 from ddtrace.internal.utils.inspection import undecorated
-from ddtrace.internal.wrapping import get_function_code
+from ddtrace.internal.utils.wrapping import get_function_code
 
 
 log = get_logger(__name__)
