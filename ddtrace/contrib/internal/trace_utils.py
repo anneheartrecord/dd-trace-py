@@ -33,12 +33,12 @@ from ddtrace.contrib.internal.trace_utils_base import set_user  # noqa:F401
 from ddtrace.ext import http
 from ddtrace.ext import net
 from ddtrace.internal import core
-from ddtrace.internal.compat import ensure_text
-from ddtrace.internal.compat import ip_is_global
-from ddtrace.internal.constants import _SERVICE_SOURCE
-from ddtrace.internal.constants import SAMPLING_DECISION_TRACE_TAG_KEY
+from ddtrace.internal.utils.compat import ensure_text
+from ddtrace.internal.utils.compat import ip_is_global
+from ddtrace.internal.utils.constants import _SERVICE_SOURCE
+from ddtrace.internal.utils.constants import SAMPLING_DECISION_TRACE_TAG_KEY
 from ddtrace.internal.core.event_hub import dispatch
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.settings._config import config
 from ddtrace.internal.settings.asm import config as asm_config
 from ddtrace.internal.utils.wrappers import iswrapped  # noqa: F401

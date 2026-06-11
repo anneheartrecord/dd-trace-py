@@ -3,7 +3,7 @@ from typing import Optional
 from ddtrace._trace.processor import TraceProcessor
 from ddtrace._trace.span import Span
 from ddtrace.ext import SpanTypes
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.llmobs._constants import CACHED_LLMOBS_EVENT_CTX_KEY
 from ddtrace.llmobs._constants import LLMOBS_STRUCT
 from ddtrace.llmobs._constants import LLMOBS_SUBMITTED_TAG_KEY

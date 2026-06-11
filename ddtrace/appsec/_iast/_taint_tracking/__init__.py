@@ -39,7 +39,7 @@ from ddtrace.appsec._iast._taint_tracking._native.taint_tracking import shift_ta
 from ddtrace.appsec._iast._taint_tracking._native.taint_tracking import shift_taint_ranges  # noqa: F401
 from ddtrace.appsec._iast._taint_tracking._native.taint_tracking import str_to_origin  # noqa: F401
 from ddtrace.appsec._iast._taint_tracking._native.taint_tracking import taint_range as TaintRange  # noqa: F401
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 
 
 log = get_logger(__name__)

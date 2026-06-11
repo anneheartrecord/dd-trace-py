@@ -13,9 +13,9 @@ from typing import cast
 
 from wrapt import FunctionWrapper
 
-from ddtrace.internal.compat import PYTHON_VERSION_INFO
-from ddtrace.internal.logger import get_logger
-from ddtrace.internal.module import origin
+from ddtrace.internal.utils.compat import PYTHON_VERSION_INFO
+from ddtrace.internal.utils.logger import get_logger
+from ddtrace.internal.utils.module import origin
 from ddtrace.internal.safety import _isinstance
 from ddtrace.internal.utils.inspection import collect_code_objects
 from ddtrace.internal.utils.inspection import functions_for_code

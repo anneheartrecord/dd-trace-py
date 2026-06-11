@@ -12,8 +12,8 @@ from ddtrace.contrib.internal.trace_utils import _convert_to_string
 from ddtrace.ext import db
 from ddtrace.ext import net
 from ddtrace.ext import sql as sqlx
-from ddtrace.internal.compat import is_wrapted
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.compat import is_wrapted
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.schema import schematize_service_name
 from ddtrace.internal.settings.integration import IntegrationConfig
 from ddtrace.internal.utils.cache import cached

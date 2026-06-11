@@ -1,4 +1,4 @@
-import ddtrace.internal.logger as ddlogger
+import ddtrace.internal.utils.logger as ddlogger
 from ddtrace.internal.settings.asm import ai_guard_config
 
 

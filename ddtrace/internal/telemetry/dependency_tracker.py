@@ -16,7 +16,7 @@ from typing import Any
 from typing import Iterable
 from typing import Optional
 
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.packages import get_module_distribution_versions
 from ddtrace.internal.settings._telemetry import config
 

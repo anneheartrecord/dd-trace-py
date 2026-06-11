@@ -4,7 +4,7 @@ from ddtrace import config
 from ddtrace._trace.pin import Pin
 from ddtrace.contrib.internal.trace_utils import set_service_and_source
 from ddtrace.ext import SpanTypes
-from ddtrace.internal.constants import COMPONENT
+from ddtrace.internal.utils.constants import COMPONENT
 from ddtrace.trace import tracer
 
 

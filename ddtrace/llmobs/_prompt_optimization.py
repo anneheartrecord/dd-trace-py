@@ -12,7 +12,7 @@ from typing import Sequence
 from typing import TypedDict
 from typing import Union
 
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.llmobs._evaluators import BaseEvaluator
 from ddtrace.llmobs._experiment import ConfigType
 from ddtrace.llmobs._experiment import Dataset

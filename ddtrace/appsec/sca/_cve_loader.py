@@ -11,7 +11,7 @@ import os
 from typing import Any
 from typing import Optional
 
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.vendor.packaging.version import InvalidVersion
 from ddtrace.vendor.packaging.version import Version
 

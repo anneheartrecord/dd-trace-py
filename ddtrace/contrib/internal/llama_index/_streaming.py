@@ -5,7 +5,7 @@ from typing import Optional
 from typing import Union
 
 from ddtrace.internal import core
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.llmobs._integrations import LlamaIndexIntegration
 from ddtrace.llmobs._integrations.base_stream_handler import AsyncStreamHandler
 from ddtrace.llmobs._integrations.base_stream_handler import StreamHandler

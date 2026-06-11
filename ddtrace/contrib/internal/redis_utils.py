@@ -10,7 +10,7 @@ from ddtrace.ext import db
 from ddtrace.ext import net
 from ddtrace.ext import redis as redisx
 from ddtrace.internal import core
-from ddtrace.internal.constants import COMPONENT
+from ddtrace.internal.utils.constants import COMPONENT
 from ddtrace.internal.schema import schematize_cache_operation
 from ddtrace.internal.utils.formats import stringify_cache_args
 

@@ -13,7 +13,7 @@ from ddtrace import config
 from ddtrace import tracer
 from ddtrace._trace.span import Span
 from ddtrace.constants import ERROR_MSG
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.threads import Lock
 
 from .constants import DD_PARTIAL_VERSION

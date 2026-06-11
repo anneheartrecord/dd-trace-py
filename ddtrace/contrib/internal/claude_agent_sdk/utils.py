@@ -1,6 +1,6 @@
 from typing import Any
 
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.llmobs._utils import _get_attr
 
 

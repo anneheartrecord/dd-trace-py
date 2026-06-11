@@ -21,7 +21,7 @@ from ddtrace.ext import SpanTypes
 from ddtrace.internal import core
 from ddtrace.internal.forksafe import ddtrace_after_in_parent
 from ddtrace.internal.forksafe import ddtrace_before_fork
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.trace import tracer
 
 

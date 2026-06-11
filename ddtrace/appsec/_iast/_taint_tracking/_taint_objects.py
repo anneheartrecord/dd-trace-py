@@ -12,7 +12,7 @@ from ddtrace.appsec._iast._taint_tracking import OriginType
 from ddtrace.appsec._iast._taint_tracking import TaintRange
 from ddtrace.appsec._iast._taint_tracking import set_ranges
 from ddtrace.appsec._iast._taint_tracking._taint_objects_base import _taint_pyobject_base
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 
 
 log = get_logger(__name__)

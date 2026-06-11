@@ -2,10 +2,10 @@ from typing import Any
 from typing import Optional
 
 import ddtrace
-from ddtrace.internal.compat import is_wrapted
+from ddtrace.internal.utils.compat import is_wrapted
 from ddtrace.internal.settings.asm import config as asm_config
 
-from ..internal.logger import get_logger
+from ..internal.utils.logger import get_logger
 
 
 log = get_logger(__name__)

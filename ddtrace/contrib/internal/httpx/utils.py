@@ -1,5 +1,5 @@
-from ddtrace.internal.compat import ensure_binary
-from ddtrace.internal.compat import ensure_text
+from ddtrace.internal.utils.compat import ensure_binary
+from ddtrace.internal.utils.compat import ensure_text
 
 
 def httpx_url_to_str(url) -> str:

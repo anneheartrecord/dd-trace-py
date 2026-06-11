@@ -9,8 +9,8 @@ from ddtrace.debugging._signal.model import Signal
 from ddtrace.debugging._signal.model import SignalState
 from ddtrace.debugging._signal.model import SignalTrack
 from ddtrace.internal._encoding import BufferFull
-from ddtrace.internal.compat import ExcInfoType
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.compat import ExcInfoType
+from ddtrace.internal.utils.logger import get_logger
 
 
 CaptorType = Callable[[list[tuple[str, Any]], list[tuple[str, Any]], ExcInfoType, int], Any]

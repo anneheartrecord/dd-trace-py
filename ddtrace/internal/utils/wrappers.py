@@ -3,7 +3,7 @@ from typing import Callable  # noqa:F401
 from typing import Optional  # noqa:F401
 from typing import TypeVar  # noqa:F401
 
-from ddtrace.internal.compat import is_wrapted
+from ddtrace.internal.utils.compat import is_wrapted
 
 
 F = TypeVar("F", bound=Callable[..., Any])

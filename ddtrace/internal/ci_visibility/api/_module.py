@@ -16,7 +16,7 @@ from ddtrace.internal.ci_visibility.constants import TEST
 from ddtrace.internal.ci_visibility.telemetry.constants import EVENT_TYPES
 from ddtrace.internal.ci_visibility.telemetry.events import record_event_created
 from ddtrace.internal.ci_visibility.telemetry.events import record_event_finished
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 
 
 log = get_logger(__name__)

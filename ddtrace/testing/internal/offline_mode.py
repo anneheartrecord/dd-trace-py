@@ -22,10 +22,10 @@ import os
 import typing as t
 
 from ddtrace.internal.settings import env
-from ddtrace.testing.internal.constants import DD_TEST_OPTIMIZATION_MANIFEST_FILE
-from ddtrace.testing.internal.constants import DD_TEST_OPTIMIZATION_PAYLOADS_IN_FILES
-from ddtrace.testing.internal.constants import SUPPORTED_MANIFEST_VERSION
-from ddtrace.testing.internal.constants import TEST_UNDECLARED_OUTPUTS_DIR
+from ddtrace.testing.internal.utils.constants import DD_TEST_OPTIMIZATION_MANIFEST_FILE
+from ddtrace.testing.internal.utils.constants import DD_TEST_OPTIMIZATION_PAYLOADS_IN_FILES
+from ddtrace.testing.internal.utils.constants import SUPPORTED_MANIFEST_VERSION
+from ddtrace.testing.internal.utils.constants import TEST_UNDECLARED_OUTPUTS_DIR
 from ddtrace.testing.internal.utils import asbool
 
 

@@ -8,8 +8,8 @@ from typing import cast
 from ddtrace import config
 from ddtrace.ext import SpanTypes
 from ddtrace.internal import core
-from ddtrace.internal.constants import COMPONENT
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.constants import COMPONENT
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.schema import schematize_service_name
 from ddtrace.internal.settings.integration import IntegrationConfig
 from ddtrace.internal.utils.cache import cached

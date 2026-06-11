@@ -3,7 +3,7 @@ from typing import Optional
 
 import wrapt
 
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.utils.wrappers import unwrap as _u
 
 

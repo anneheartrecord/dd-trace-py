@@ -28,11 +28,11 @@ from ddtrace._trace.pin import Pin
 from ddtrace.contrib import trace_utils
 from ddtrace.contrib.internal.django.user import _DjangoUserInfoRetriever
 from ddtrace.internal import core
-from ddtrace.internal.compat import is_wrapted
-from ddtrace.internal.constants import COMPONENT
+from ddtrace.internal.utils.compat import is_wrapted
+from ddtrace.internal.utils.constants import COMPONENT
 from ddtrace.internal.core.event_hub import ResultType
 from ddtrace.internal.endpoints import endpoint_collection
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.schema import schematize_service_name
 from ddtrace.internal.schema import schematize_url_operation
 from ddtrace.internal.schema.span_attribute_schema import SpanDirection
@@ -479,7 +479,7 @@ def traced_technical_500_response(django, pin, func, instance, args, kwargs):
 @trace_utils.with_traced_module
 def traced_get_asgi_application(django, pin, func, instance, args, kwargs):
     from ddtrace.contrib.asgi import TraceMiddleware
-    from ddtrace.internal.constants import COMPONENT
+    from ddtrace.internal.utils.constants import COMPONENT
 
     def django_asgi_modifier(span, scope):
         span.name = schematize_url_operation("django.request", protocol="http", direction=SpanDirection.INBOUND)

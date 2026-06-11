@@ -6,7 +6,7 @@ import typing as t
 from ddtrace.internal.bytecode_injection.core import CallbackType
 from ddtrace.internal.bytecode_injection.core import InjectionContext
 from ddtrace.internal.bytecode_injection.core import inject_invocation
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 
 from .callbacks import _default_bytecode_exc_callback
 

@@ -9,8 +9,8 @@ from ddtrace.contrib._events.http_client import HttpClientRequestEvent
 from ddtrace.contrib.internal.trace_utils import _sanitized_url
 from ddtrace.contrib.internal.trace_utils import ext_service
 from ddtrace.internal import core
-from ddtrace.internal.constants import USER_AGENT_HEADER
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.constants import USER_AGENT_HEADER
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.opentelemetry.constants import OTLP_EXPORTER_HEADER_IDENTIFIER
 from ddtrace.internal.settings.asm import config as asm_config
 from ddtrace.internal.utils import get_argument_value

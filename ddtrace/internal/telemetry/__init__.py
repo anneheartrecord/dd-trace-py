@@ -6,7 +6,7 @@ This is normally started automatically when ``ddtrace`` is imported. It can be d
 
 import typing as t
 
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.settings import env
 from ddtrace.internal.settings._agent import config as agent_config
 from ddtrace.internal.settings._core import FLEET_CONFIG

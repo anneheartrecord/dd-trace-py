@@ -2,8 +2,8 @@ import logging
 import sys
 import warnings
 
-from ddtrace.internal.module import ModuleWatchdog
-from ddtrace.internal.module import is_module_installed
+from ddtrace.internal.utils.module import ModuleWatchdog
+from ddtrace.internal.utils.module import is_module_installed
 from ddtrace.internal.settings import env
 from ddtrace.internal.utils.formats import asbool  # noqa:F401
 

@@ -7,7 +7,7 @@ from ddtrace._trace.span import Span
 from ddtrace.ext import http
 from ddtrace.ext import user
 from ddtrace.internal import core
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.settings._config import config
 from ddtrace.internal.settings.asm import config as asm_config
 from ddtrace.internal.settings.integration import IntegrationConfig

@@ -37,7 +37,7 @@ from ddtrace.appsec.ai_guard._api_client import Message
 from ddtrace.appsec.ai_guard._api_client import Options
 from ddtrace.appsec.ai_guard._api_client import ToolCall
 from ddtrace.internal import telemetry
-import ddtrace.internal.logger as ddlogger
+import ddtrace.internal.utils.logger as ddlogger
 from ddtrace.internal.settings.asm import ai_guard_config
 from ddtrace.internal.telemetry.constants import TELEMETRY_LOG_LEVEL
 

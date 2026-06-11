@@ -6,7 +6,7 @@ from typing import TypeVar
 from typing import Union
 
 from ddtrace.internal._unpatched import threading_Lock
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 
 
 LOGGER = get_logger(__name__)

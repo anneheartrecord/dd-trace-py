@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 import typing as t
 
-from ddtrace.testing.internal.constants import ITRSkippingLevel
+from ddtrace.testing.internal.utils.constants import ITRSkippingLevel
 from ddtrace.testing.internal.settings_data import Settings
 from ddtrace.testing.internal.settings_data import TestProperties
 from ddtrace.testing.internal.telemetry import TelemetryAPI

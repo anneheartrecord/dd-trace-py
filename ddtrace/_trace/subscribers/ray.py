@@ -46,7 +46,7 @@ from ddtrace.contrib.internal.ray.span_manager import stop_long_running_job
 from ddtrace.contrib.internal.ray.span_manager import stop_long_running_span
 from ddtrace.internal import core
 from ddtrace.internal.core.subscriber import Subscriber
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.propagation.http import _TraceContext
 from ddtrace.trace import tracer
 

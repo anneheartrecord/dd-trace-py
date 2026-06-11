@@ -8,7 +8,7 @@ from ddtrace.contrib.internal.claude_agent_sdk._streaming import wrap_prompt_if_
 from ddtrace.contrib.internal.claude_agent_sdk.utils import _retrieve_context
 from ddtrace.contrib.trace_utils import unwrap
 from ddtrace.contrib.trace_utils import wrap
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.llmobs._integrations import ClaudeAgentSdkIntegration
 
 

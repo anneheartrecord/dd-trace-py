@@ -10,7 +10,7 @@ from ._utils cimport PyBytesLike_Check
 
 
 # Do not use an absolute import here Cython<3.0.0 will
-#   import `ddtrace.internal.constants` instead when this
+#   import `ddtrace.internal.utils.constants` instead when this
 #   package is installed in editable mode
 # See the following for more details
 #   https://github.com/DataDog/dd-trace-py/pull/4085

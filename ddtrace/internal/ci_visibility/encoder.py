@@ -23,7 +23,7 @@ from ddtrace.internal.ci_visibility.telemetry.payload import ENDPOINT
 from ddtrace.internal.ci_visibility.telemetry.payload import record_endpoint_payload_events_count
 from ddtrace.internal.ci_visibility.telemetry.payload import record_endpoint_payload_events_serialization_time
 from ddtrace.internal.encoding import JSONEncoderV2
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.settings import env
 from ddtrace.internal.utils.time import StopWatch
 from ddtrace.internal.writer.writer import NoEncodableSpansError

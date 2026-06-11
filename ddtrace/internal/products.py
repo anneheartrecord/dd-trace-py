@@ -8,7 +8,7 @@ import typing as t
 from typing import Protocol  # noqa:F401
 
 from ddtrace.internal import forksafe
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.settings._core import DDConfig
 from ddtrace.internal.telemetry import report_configuration
 from ddtrace.internal.telemetry import telemetry_writer

@@ -5,7 +5,7 @@ from types import MethodType
 import typing as t
 
 import ddtrace.internal.core as core
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.products import manager as product_manager
 from ddtrace.internal.settings._core import ValueSource
 from ddtrace.internal.settings.code_origin import config

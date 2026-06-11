@@ -9,8 +9,8 @@ from ddtrace.debugging._probe.model import TriggerLineProbe
 from ddtrace.debugging._session import Session
 from ddtrace.debugging._signal.log import LogSignal
 from ddtrace.debugging._signal.model import probe_to_signal
-from ddtrace.internal.compat import ExcInfoType
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.compat import ExcInfoType
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.metrics import Metrics
 
 

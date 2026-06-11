@@ -25,7 +25,7 @@ import typing
 from typing import Callable
 
 from ddtrace.internal.datadog.profiling import stack
-from ddtrace.internal.module import ModuleWatchdog
+from ddtrace.internal.utils.module import ModuleWatchdog
 
 
 @ModuleWatchdog.after_module_imported("faulthandler")

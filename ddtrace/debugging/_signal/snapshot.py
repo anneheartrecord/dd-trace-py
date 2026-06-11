@@ -33,8 +33,8 @@ from ddtrace.debugging._signal.model import EvaluationError
 from ddtrace.debugging._signal.model import SignalTrack
 from ddtrace.debugging._signal.model import probe_to_signal
 from ddtrace.debugging._signal.utils import serialize
-from ddtrace.internal.compat import NO_EXCEPTION
-from ddtrace.internal.compat import ExcInfoType
+from ddtrace.internal.utils.compat import NO_EXCEPTION
+from ddtrace.internal.utils.compat import ExcInfoType
 from ddtrace.internal.metrics import Metrics
 from ddtrace.internal.utils.time import HourGlass
 

@@ -16,7 +16,7 @@ from ddtrace.contrib.internal.trace_utils_base import set_user
 from ddtrace.ext import user
 from ddtrace.internal import core
 from ddtrace.internal._exceptions import BlockingException
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.settings.asm import config as asm_config
 
 
@@ -42,7 +42,7 @@ def _maybe_hash(value: Optional[str], mode: str) -> Optional[str]:
 
 
 def _asm_manual_keep(span: Span) -> None:
-    from ddtrace.internal.constants import SAMPLING_DECISION_TRACE_TAG_KEY
+    from ddtrace.internal.utils.constants import SAMPLING_DECISION_TRACE_TAG_KEY
     from ddtrace.internal.sampling import SamplingMechanism
 
     span._override_sampling_decision(USER_KEEP)
@@ -55,7 +55,7 @@ def _asm_manual_keep(span: Span) -> None:
 
 
 def _aiguard_manual_keep(span: Span) -> None:
-    from ddtrace.internal.constants import SAMPLING_DECISION_TRACE_TAG_KEY
+    from ddtrace.internal.utils.constants import SAMPLING_DECISION_TRACE_TAG_KEY
     from ddtrace.internal.sampling import SamplingMechanism
 
     span._override_sampling_decision(USER_KEEP)

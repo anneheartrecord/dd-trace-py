@@ -3,7 +3,7 @@ import typing as t
 from typing import Optional
 
 from ddtrace.internal.flare.flare import Flare
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.remoteconfig import Payload
 from ddtrace.internal.remoteconfig import RCCallback
 from ddtrace.internal.remoteconfig._connectors import PublisherSubscriberConnector

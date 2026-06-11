@@ -10,7 +10,7 @@ import typing as t
 
 from ddtrace.internal.telemetry import telemetry_writer
 from ddtrace.internal.telemetry.constants import TELEMETRY_NAMESPACE
-from ddtrace.testing.internal.constants import ITRSkippingLevel
+from ddtrace.testing.internal.utils.constants import ITRSkippingLevel
 from ddtrace.testing.internal.offline_mode import write_payload_file
 from ddtrace.testing.internal.settings_data import Settings
 

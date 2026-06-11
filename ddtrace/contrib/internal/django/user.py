@@ -1,5 +1,5 @@
 from ddtrace.appsec._utils import _UserInfoRetriever
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.settings.asm import config as asm_config
 
 

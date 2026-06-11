@@ -32,8 +32,8 @@ import sys
 import types
 
 from ddtrace.internal import forksafe
-from ddtrace.internal.logger import get_logger
-from ddtrace.internal.module import ModuleWatchdog
+from ddtrace.internal.utils.logger import get_logger
+from ddtrace.internal.utils.module import ModuleWatchdog
 from ddtrace.internal.settings import env
 from ddtrace.internal.settings.asm import config as asm_config
 

@@ -9,7 +9,7 @@ from typing import MutableMapping
 from typing import Optional
 
 from ddtrace.ext import git
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.settings import env
 
 

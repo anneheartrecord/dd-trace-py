@@ -15,7 +15,7 @@ from ddtrace.constants import SPAN_KIND
 from ddtrace.contrib import trace_utils
 from ddtrace.contrib.internal.trace_utils import set_service_and_source
 from ddtrace.internal import core
-from ddtrace.internal.constants import COMPONENT
+from ddtrace.internal.utils.constants import COMPONENT
 from ddtrace.internal.core.subscriber import ContextSubscriber
 from ddtrace.trace import tracer
 

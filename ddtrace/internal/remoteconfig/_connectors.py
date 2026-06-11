@@ -5,8 +5,8 @@ import time
 from typing import Sequence
 from uuid import UUID
 
-from ddtrace.internal.compat import get_mp_context
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.compat import get_mp_context
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.remoteconfig import Payload
 
 

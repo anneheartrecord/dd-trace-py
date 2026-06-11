@@ -16,8 +16,8 @@ from typing import NamedTuple  # noqa:F401
 from typing import Optional  # noqa:F401
 from typing import Union  # noqa:F401
 
-from ddtrace.internal import compat
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils import compat
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.settings import env
 from ddtrace.internal.utils.cache import cached
 from ddtrace.internal.utils.time import StopWatch

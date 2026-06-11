@@ -29,7 +29,7 @@ from ddtrace.debugging._redaction import REDACTED_PLACEHOLDER
 from ddtrace.debugging._redaction import redact
 from ddtrace.debugging._redaction import redact_type
 from ddtrace.debugging._safety import get_fields
-from ddtrace.internal.compat import ExcInfoType
+from ddtrace.internal.utils.compat import ExcInfoType
 from ddtrace.internal.safety import _isinstance
 from ddtrace.internal.utils.cache import cached
 

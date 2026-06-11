@@ -9,8 +9,8 @@ from wrapt import FunctionWrapper
 from wrapt import resolve_path
 
 from ddtrace.internal._unpatched import _gc as gc
-from ddtrace.internal.logger import get_logger
-from ddtrace.internal.module import ModuleWatchdog
+from ddtrace.internal.utils.logger import get_logger
+from ddtrace.internal.utils.module import ModuleWatchdog
 
 
 log = get_logger(__name__)

@@ -4,8 +4,8 @@ from collections import defaultdict
 import typing as t
 
 from ddtrace.internal.settings import env
-from ddtrace.testing.internal.constants import TAG_FALSE
-from ddtrace.testing.internal.constants import TAG_TRUE
+from ddtrace.testing.internal.utils.constants import TAG_FALSE
+from ddtrace.testing.internal.utils.constants import TAG_TRUE
 from ddtrace.testing.internal.test_data import Test
 from ddtrace.testing.internal.test_data import TestRun
 from ddtrace.testing.internal.test_data import TestStatus

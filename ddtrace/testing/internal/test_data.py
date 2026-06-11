@@ -8,9 +8,9 @@ import os
 from pathlib import Path
 import typing as t
 
-from ddtrace.testing.internal.constants import DEFAULT_SERVICE_NAME
-from ddtrace.testing.internal.constants import TAG_TRUE
-from ddtrace.testing.internal.constants import ITRSkippingLevel
+from ddtrace.testing.internal.utils.constants import DEFAULT_SERVICE_NAME
+from ddtrace.testing.internal.utils.constants import TAG_TRUE
+from ddtrace.testing.internal.utils.constants import ITRSkippingLevel
 from ddtrace.testing.internal.telemetry import EventType
 from ddtrace.testing.internal.telemetry import TelemetryAPI
 from ddtrace.testing.internal.tracer_api import Time

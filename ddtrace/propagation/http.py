@@ -26,25 +26,25 @@ from ..internal._tagset import TagsetMaxSizeDecodeError
 from ..internal._tagset import TagsetMaxSizeEncodeError
 from ..internal._tagset import decode_tagset_string
 from ..internal._tagset import encode_tagset_values
-from ..internal.compat import ensure_text
-from ..internal.constants import _PROPAGATION_BEHAVIOR_RESTART
-from ..internal.constants import _PROPAGATION_STYLE_BAGGAGE
-from ..internal.constants import _PROPAGATION_STYLE_W3C_TRACECONTEXT
-from ..internal.constants import BAGGAGE_TAG_PREFIX
-from ..internal.constants import DD_TRACE_BAGGAGE_MAX_BYTES
-from ..internal.constants import DD_TRACE_BAGGAGE_MAX_ITEMS
-from ..internal.constants import DD_TRACE_TRACESTATE_ITEM_MAX_CHARS
-from ..internal.constants import DD_TRACE_TRACESTATE_MAX_BYTES
-from ..internal.constants import DD_TRACE_TRACESTATE_MAX_ITEMS
-from ..internal.constants import HIGHER_ORDER_TRACE_ID_BITS as _HIGHER_ORDER_TRACE_ID_BITS
-from ..internal.constants import LAST_DD_PARENT_ID_KEY
-from ..internal.constants import MAX_UINT_64BITS as _MAX_UINT_64BITS
-from ..internal.constants import PROPAGATION_STYLE_B3_MULTI
-from ..internal.constants import PROPAGATION_STYLE_B3_SINGLE
-from ..internal.constants import PROPAGATION_STYLE_DATADOG
-from ..internal.constants import W3C_TRACEPARENT_KEY
-from ..internal.constants import W3C_TRACESTATE_KEY
-from ..internal.logger import get_logger
+from ..internal.utils.compat import ensure_text
+from ..internal.utils.constants import _PROPAGATION_BEHAVIOR_RESTART
+from ..internal.utils.constants import _PROPAGATION_STYLE_BAGGAGE
+from ..internal.utils.constants import _PROPAGATION_STYLE_W3C_TRACECONTEXT
+from ..internal.utils.constants import BAGGAGE_TAG_PREFIX
+from ..internal.utils.constants import DD_TRACE_BAGGAGE_MAX_BYTES
+from ..internal.utils.constants import DD_TRACE_BAGGAGE_MAX_ITEMS
+from ..internal.utils.constants import DD_TRACE_TRACESTATE_ITEM_MAX_CHARS
+from ..internal.utils.constants import DD_TRACE_TRACESTATE_MAX_BYTES
+from ..internal.utils.constants import DD_TRACE_TRACESTATE_MAX_ITEMS
+from ..internal.utils.constants import HIGHER_ORDER_TRACE_ID_BITS as _HIGHER_ORDER_TRACE_ID_BITS
+from ..internal.utils.constants import LAST_DD_PARENT_ID_KEY
+from ..internal.utils.constants import MAX_UINT_64BITS as _MAX_UINT_64BITS
+from ..internal.utils.constants import PROPAGATION_STYLE_B3_MULTI
+from ..internal.utils.constants import PROPAGATION_STYLE_B3_SINGLE
+from ..internal.utils.constants import PROPAGATION_STYLE_DATADOG
+from ..internal.utils.constants import W3C_TRACEPARENT_KEY
+from ..internal.utils.constants import W3C_TRACESTATE_KEY
+from ..internal.utils.logger import get_logger
 from ..internal.sampling import validate_sampling_decision
 from ..internal.utils.http import w3c_tracestate_add_p
 from ._utils import get_wsgi_header

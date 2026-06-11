@@ -30,7 +30,7 @@ from ddtrace.ext.test_visibility.status import TestExcInfo
 from ddtrace.ext.test_visibility.status import TestSourceFileInfo
 from ddtrace.ext.test_visibility.status import TestStatus
 from ddtrace.internal.ci_visibility.service_registry import require_ci_visibility_service
-from ddtrace.internal.logger import get_logger as _get_logger
+from ddtrace.internal.utils.logger import get_logger as _get_logger
 
 
 def _get_item_tag(item_id: TestVisibilityItemId, tag_name: str) -> Any:

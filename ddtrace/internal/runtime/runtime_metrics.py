@@ -4,7 +4,7 @@ from typing import Optional  # noqa:F401
 
 import ddtrace
 from ddtrace.internal import atexit
-from ddtrace.internal.constants import EXPERIMENTAL_FEATURES
+from ddtrace.internal.utils.constants import EXPERIMENTAL_FEATURES
 from ddtrace.internal.threads import Lock
 from ddtrace.vendor.dogstatsd import DogStatsd
 

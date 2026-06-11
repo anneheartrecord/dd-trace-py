@@ -2,7 +2,7 @@ from enum import Enum
 from typing import Optional
 
 from ddtrace.internal.ci_visibility.telemetry.constants import TEST_FRAMEWORKS
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.telemetry import telemetry_writer
 from ddtrace.internal.telemetry.constants import TELEMETRY_NAMESPACE
 

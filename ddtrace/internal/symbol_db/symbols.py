@@ -25,11 +25,11 @@ import typing as t
 
 from ddtrace import config
 from ddtrace.internal import packages
-from ddtrace.internal.compat import singledispatchmethod
-from ddtrace.internal.constants import DEFAULT_SERVICE_NAME
-from ddtrace.internal.logger import get_logger
-from ddtrace.internal.module import BaseModuleWatchdog
-from ddtrace.internal.module import origin
+from ddtrace.internal.utils.compat import singledispatchmethod
+from ddtrace.internal.utils.constants import DEFAULT_SERVICE_NAME
+from ddtrace.internal.utils.logger import get_logger
+from ddtrace.internal.utils.module import BaseModuleWatchdog
+from ddtrace.internal.utils.module import origin
 from ddtrace.internal.periodic import Timer
 from ddtrace.internal.runtime import get_ancestor_runtime_id
 from ddtrace.internal.runtime import get_runtime_id

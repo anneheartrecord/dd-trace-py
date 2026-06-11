@@ -45,8 +45,8 @@ from bytecode import Instr
 from bytecode import Label
 
 from ddtrace.debugging._safety import safe_getitem
-from ddtrace.internal.compat import PYTHON_VERSION_INFO as PY
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.compat import PYTHON_VERSION_INFO as PY
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.safety import _isinstance
 
 

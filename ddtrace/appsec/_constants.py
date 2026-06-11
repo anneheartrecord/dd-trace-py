@@ -10,10 +10,10 @@ from typing import Generator
 from typing import Iterator
 from typing import Literal  # noqa:F401
 
-from ddtrace.internal.constants import HTTP_REQUEST_BLOCKED
-from ddtrace.internal.constants import REQUEST_PATH_PARAMS
-from ddtrace.internal.constants import RESPONSE_HEADERS
-from ddtrace.internal.constants import STATUS_403_TYPE_AUTO
+from ddtrace.internal.utils.constants import HTTP_REQUEST_BLOCKED
+from ddtrace.internal.utils.constants import REQUEST_PATH_PARAMS
+from ddtrace.internal.utils.constants import RESPONSE_HEADERS
+from ddtrace.internal.utils.constants import STATUS_403_TYPE_AUTO
 
 
 TEXT_TYPES = (str, bytes, bytearray)

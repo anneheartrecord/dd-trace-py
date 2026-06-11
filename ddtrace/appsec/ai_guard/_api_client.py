@@ -15,7 +15,7 @@ from ddtrace.ext import http
 from ddtrace.internal import core
 from ddtrace.internal import telemetry
 from ddtrace.internal._exceptions import DDBlockException
-import ddtrace.internal.logger as ddlogger
+import ddtrace.internal.utils.logger as ddlogger
 from ddtrace.internal.settings.asm import ai_guard_config
 from ddtrace.internal.telemetry import TELEMETRY_NAMESPACE
 from ddtrace.internal.telemetry.metrics_namespaces import MetricTagType

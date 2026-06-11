@@ -14,10 +14,10 @@ from ddtrace.ext import SpanKind
 from ddtrace.ext import SpanTypes
 from ddtrace.ext import kafka as kafkax
 from ddtrace.internal import core
-from ddtrace.internal.constants import COMPONENT
-from ddtrace.internal.constants import MESSAGING_DESTINATION_NAME
-from ddtrace.internal.constants import MESSAGING_SYSTEM
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.constants import COMPONENT
+from ddtrace.internal.utils.constants import MESSAGING_DESTINATION_NAME
+from ddtrace.internal.utils.constants import MESSAGING_SYSTEM
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.schema import schematize_messaging_operation
 from ddtrace.internal.schema import schematize_service_name
 from ddtrace.internal.schema.span_attribute_schema import SpanDirection

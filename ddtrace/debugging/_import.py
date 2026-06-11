@@ -4,8 +4,8 @@ from types import CodeType
 from types import ModuleType
 
 from ddtrace.debugging._function.discovery import FunctionDiscovery
-from ddtrace.internal.module import ModuleHookType
-from ddtrace.internal.module import ModuleWatchdog
+from ddtrace.internal.utils.module import ModuleHookType
+from ddtrace.internal.utils.module import ModuleWatchdog
 
 
 class DebuggerModuleWatchdog(ModuleWatchdog):

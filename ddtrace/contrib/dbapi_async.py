@@ -2,8 +2,8 @@ import inspect
 
 from ddtrace import config
 from ddtrace.internal import core
-from ddtrace.internal.constants import COMPONENT
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.constants import COMPONENT
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.utils import ArgumentError
 from ddtrace.internal.utils import get_argument_value
 from ddtrace.trace import tracer

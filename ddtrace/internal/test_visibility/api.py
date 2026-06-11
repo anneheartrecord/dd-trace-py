@@ -7,7 +7,7 @@ from ddtrace.ext.test_visibility._utils import _catch_and_log_exceptions
 from ddtrace.internal.ci_visibility.api._base import SPECIAL_STATUS
 from ddtrace.internal.ci_visibility.service_registry import require_ci_visibility_service
 from ddtrace.internal.codeowners import Codeowners as _Codeowners
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.test_visibility._atr_mixins import ATRSessionMixin
 from ddtrace.internal.test_visibility._atr_mixins import ATRTestMixin
 from ddtrace.internal.test_visibility._attempt_to_fix_mixins import AttemptToFixSessionMixin

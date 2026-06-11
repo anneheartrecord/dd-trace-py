@@ -7,7 +7,7 @@ from typing import Any
 from typing import Callable
 from typing import Optional
 
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.settings.process_tags import process_tags_config
 from ddtrace.internal.utils.fnv import fnv1_64
 

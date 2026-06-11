@@ -4,7 +4,7 @@
 import platform
 import sys
 
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.profiling import bootstrap
 from ddtrace.profiling import profiler
 

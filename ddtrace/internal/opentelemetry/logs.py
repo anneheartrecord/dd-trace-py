@@ -5,7 +5,7 @@ import opentelemetry.version
 
 from ddtrace import config
 from ddtrace.internal.hostname import get_hostname
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.settings import env
 from ddtrace.internal.settings._opentelemetry import otel_config
 from ddtrace.internal.telemetry import telemetry_writer

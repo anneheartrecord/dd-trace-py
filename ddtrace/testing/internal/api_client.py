@@ -8,8 +8,8 @@ import typing as t
 import uuid
 
 from ddtrace.internal.settings import env
-from ddtrace.testing.internal.constants import EMPTY_NAME
-from ddtrace.testing.internal.constants import ITRSkippingLevel
+from ddtrace.testing.internal.utils.constants import EMPTY_NAME
+from ddtrace.testing.internal.utils.constants import ITRSkippingLevel
 from ddtrace.testing.internal.git import GitTag
 from ddtrace.testing.internal.http import BackendConnectorSetup
 from ddtrace.testing.internal.http import FileAttachment

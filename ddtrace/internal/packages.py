@@ -9,7 +9,7 @@ import sysconfig
 from types import ModuleType
 import typing as t
 
-from ddtrace.internal.module import origin
+from ddtrace.internal.utils.module import origin
 from ddtrace.internal.settings.third_party import config as tp_config
 from ddtrace.internal.utils.cache import callonce
 

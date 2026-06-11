@@ -16,7 +16,7 @@ from ddtrace.vendor.packaging.specifiers import SpecifierSet
 from ddtrace.vendor.packaging.version import Version
 
 from .internal import telemetry
-from .internal.logger import get_logger
+from .internal.utils.logger import get_logger
 from .internal.utils import formats
 from .internal.utils.deprecations import DDTraceDeprecationWarning  # noqa: E402
 

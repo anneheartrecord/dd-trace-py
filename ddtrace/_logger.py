@@ -2,7 +2,7 @@ import logging
 from os import path
 from typing import Optional
 
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.telemetry import get_config
 from ddtrace.internal.utils.formats import asbool
 

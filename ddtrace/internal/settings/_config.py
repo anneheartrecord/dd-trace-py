@@ -8,21 +8,21 @@ from typing import Optional  # noqa:F401
 from typing import Union  # noqa:F401
 
 from ddtrace.internal import gitmetadata
-from ddtrace.internal.constants import _PROPAGATION_BEHAVIOR_DEFAULT
-from ddtrace.internal.constants import _PROPAGATION_BEHAVIOR_IGNORE
-from ddtrace.internal.constants import _PROPAGATION_STYLE_DEFAULT
-from ddtrace.internal.constants import _PROPAGATION_STYLE_NONE
-from ddtrace.internal.constants import DEFAULT_BUFFER_SIZE
-from ddtrace.internal.constants import DEFAULT_MAX_PAYLOAD_SIZE
-from ddtrace.internal.constants import DEFAULT_PROCESSING_INTERVAL
-from ddtrace.internal.constants import DEFAULT_REUSE_CONNECTIONS
-from ddtrace.internal.constants import DEFAULT_SAMPLING_RATE_LIMIT
-from ddtrace.internal.constants import DEFAULT_TIMEOUT
-from ddtrace.internal.constants import PROPAGATION_STYLE_ALL
+from ddtrace.internal.utils.constants import _PROPAGATION_BEHAVIOR_DEFAULT
+from ddtrace.internal.utils.constants import _PROPAGATION_BEHAVIOR_IGNORE
+from ddtrace.internal.utils.constants import _PROPAGATION_STYLE_DEFAULT
+from ddtrace.internal.utils.constants import _PROPAGATION_STYLE_NONE
+from ddtrace.internal.utils.constants import DEFAULT_BUFFER_SIZE
+from ddtrace.internal.utils.constants import DEFAULT_MAX_PAYLOAD_SIZE
+from ddtrace.internal.utils.constants import DEFAULT_PROCESSING_INTERVAL
+from ddtrace.internal.utils.constants import DEFAULT_REUSE_CONNECTIONS
+from ddtrace.internal.utils.constants import DEFAULT_SAMPLING_RATE_LIMIT
+from ddtrace.internal.utils.constants import DEFAULT_TIMEOUT
+from ddtrace.internal.utils.constants import PROPAGATION_STYLE_ALL
 from ddtrace.internal.evp_proxy.constants import DEFAULT_EVP_EVENT_SIZE_LIMIT
 from ddtrace.internal.evp_proxy.constants import DEFAULT_EVP_PAYLOAD_SIZE_LIMIT
-from ddtrace.internal.logger import get_log_injection_state
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_log_injection_state
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.native import config as _native_config
 from ddtrace.internal.schema import DEFAULT_SPAN_SERVICE_NAME
 from ddtrace.internal.serverless import in_aws_lambda

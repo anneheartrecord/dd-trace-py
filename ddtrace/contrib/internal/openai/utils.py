@@ -2,7 +2,7 @@ from collections import defaultdict
 from typing import AsyncGenerator
 from typing import Generator
 
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.llmobs._integrations.base_stream_handler import AsyncStreamHandler
 from ddtrace.llmobs._integrations.base_stream_handler import StreamHandler
 from ddtrace.llmobs._integrations.utils import openai_construct_completion_from_streamed_chunks

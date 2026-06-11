@@ -7,7 +7,7 @@ from typing import Callable
 
 from ddtrace import tracer
 from ddtrace.errortracking._handled_exceptions.callbacks import _default_errortracking_exc_callback
-from ddtrace.internal.module import BaseModuleWatchdog
+from ddtrace.internal.utils.module import BaseModuleWatchdog
 from ddtrace.internal.packages import filename_to_package  # noqa: F401
 from ddtrace.internal.packages import is_stdlib  # noqa: F401
 from ddtrace.internal.packages import is_third_party  # noqa: F401

@@ -11,7 +11,7 @@ from types import CodeType
 from typing import NamedTuple
 from typing import Optional
 
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 
 
 log = get_logger(__name__)

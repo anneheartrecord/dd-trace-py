@@ -14,7 +14,7 @@ from ddtrace.ext import db
 from ddtrace.ext import net
 from ddtrace.ext import sql
 from ddtrace.internal import core
-from ddtrace.internal.constants import COMPONENT
+from ddtrace.internal.utils.constants import COMPONENT
 
 
 class Psycopg3TracedConnection(dbapi.TracedConnection):

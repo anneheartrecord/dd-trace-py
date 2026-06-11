@@ -6,7 +6,7 @@ from typing import Optional  # noqa:F401
 from ddtrace import config as ddconfig
 from ddtrace.internal import agent
 from ddtrace.internal import periodic
-from ddtrace.internal.logger import get_logger
+from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.remoteconfig import RCCallback
 from ddtrace.internal.remoteconfig.client import RemoteConfigClient
 from ddtrace.internal.remoteconfig.client import config as rc_config

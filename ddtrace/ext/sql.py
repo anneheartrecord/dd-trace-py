@@ -1,5 +1,5 @@
-from ddtrace.internal.logger import get_logger
-from ddtrace.internal.module import ModuleWatchdog
+from ddtrace.internal.utils.logger import get_logger
+from ddtrace.internal.utils.module import ModuleWatchdog
 
 
 log = get_logger(__name__)
