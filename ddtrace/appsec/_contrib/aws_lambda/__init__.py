@@ -10,7 +10,7 @@ from ddtrace.appsec._handlers import _on_set_http_meta
 from ddtrace.appsec._http_utils import extract_cookies_from_headers
 from ddtrace.appsec._http_utils import normalize_headers
 from ddtrace.appsec._http_utils import parse_http_body
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.settings.asm import config as asm_config
 
 

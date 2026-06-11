@@ -4,7 +4,7 @@ from typing import Any  # noqa:F401
 from urllib import parse
 
 from ddtrace import config
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.datastreams.processor import DsmPathwayCodec
 from ddtrace.internal.datastreams.utils import _calculate_byte_size
 from ddtrace.internal.utils.logger import get_logger

@@ -58,7 +58,7 @@ from ddtrace.ext.kafka import PARTITION
 from ddtrace.ext.kafka import RECEIVED_MESSAGE
 from ddtrace.ext.kafka import TOMBSTONE
 from ddtrace.ext.kafka import TOPIC
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.compat import is_valid_ip
 from ddtrace.internal.utils.compat import maybe_stringify
 from ddtrace.internal.utils.constants import COMPONENT

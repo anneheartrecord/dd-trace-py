@@ -6,7 +6,7 @@ from ddtrace.appsec._contrib.stripe.types import StripeEvent
 from ddtrace.appsec._contrib.stripe.types import StripePaymentIntent
 from ddtrace.appsec._patch_utils import try_unwrap
 from ddtrace.appsec._patch_utils import try_wrap_function_wrapper
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 
 
 def _wrap_checkout_session_create(

@@ -6,7 +6,7 @@ import wrapt
 from ddtrace import config
 from ddtrace.contrib._events.web_framework import WebFrameworkRequestEvent
 from ddtrace.ext import SpanTypes
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.compat import is_wrapted
 from ddtrace.internal.utils.constants import COMPONENT
 from ddtrace.internal.utils.logger import get_logger

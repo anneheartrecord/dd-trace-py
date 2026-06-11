@@ -4,7 +4,7 @@ from typing import Union  # noqa:F401
 
 import ddtrace
 from ddtrace import config as dd_config
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal import process_tags
 from ddtrace.internal.utils.constants import PROPAGATED_HASH
 from ddtrace.internal.utils.logger import get_logger

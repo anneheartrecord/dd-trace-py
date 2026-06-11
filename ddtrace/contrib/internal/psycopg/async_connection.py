@@ -9,7 +9,7 @@ from ddtrace.contrib.internal.trace_utils import ext_service
 from ddtrace.ext import SpanKind
 from ddtrace.ext import SpanTypes
 from ddtrace.ext import db
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.constants import COMPONENT
 
 

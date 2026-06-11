@@ -31,7 +31,7 @@ from ddtrace.constants import USER_KEEP
 from ddtrace.constants import USER_REJECT
 from ddtrace.constants import VERSION_KEY
 from ddtrace.ext import net
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.compat import NumericType
 from ddtrace.internal.utils.constants import MAX_INT_64BITS as _MAX_INT_64BITS
 from ddtrace.internal.utils.constants import MAX_UINT_64BITS as _MAX_UINT_64BITS

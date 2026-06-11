@@ -6,7 +6,7 @@ from typing import TypeVar
 
 from ddtrace import config
 from ddtrace.ext import http
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.compat import maybe_stringify
 from ddtrace.internal.utils.constants import COMPONENT
 from ddtrace.internal.utils.logger import get_logger

@@ -3,7 +3,7 @@ from aiohttp.web_urldispatcher import SystemRoute
 
 from ddtrace import config
 from ddtrace.contrib._events.web_framework import WebFrameworkRequestEvent
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.deprecations import DDTraceDeprecationWarning
 from ddtrace.vendor.debtcollector import deprecate
 

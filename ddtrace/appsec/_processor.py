@@ -31,7 +31,7 @@ from ddtrace.appsec._utils import is_inferred_span
 from ddtrace.constants import _ORIGIN_KEY
 from ddtrace.constants import _RUNTIME_FAMILY
 from ddtrace.ext import SpanTypes
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal._unpatched import unpatched_open as open  # noqa: A004
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.rate_limiter import RateLimiter

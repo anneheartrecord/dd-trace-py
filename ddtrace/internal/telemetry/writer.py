@@ -596,7 +596,7 @@ class TelemetryWriter(PeriodicService):
 
     def _dispatch(self) -> None:
         # moved core here to avoid circular import
-        from ddtrace.internal import core
+        from ddtrace.internal.utils import core
 
         core.dispatch("telemetry.periodic")
 

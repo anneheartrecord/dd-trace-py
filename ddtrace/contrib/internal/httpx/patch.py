@@ -13,7 +13,7 @@ from ddtrace.contrib._events.http_client import HttpClientRequestEvent
 from ddtrace.contrib._events.http_client import HttpClientSendEvent
 from ddtrace.contrib.internal.trace_utils import ext_service
 from ddtrace.ext import SpanKind
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.compat import ensure_binary
 from ddtrace.internal.utils.compat import ensure_text
 from ddtrace.internal.utils.constants import COMPONENT

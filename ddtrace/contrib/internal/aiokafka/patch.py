@@ -17,7 +17,7 @@ from ddtrace.ext.kafka import HOST_LIST
 from ddtrace.ext.kafka import PRODUCE
 from ddtrace.ext.kafka import SERVICE
 from ddtrace.ext.kafka import TOPIC
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.constants import COMPONENT
 from ddtrace.internal.utils.constants import MESSAGING_DESTINATION_NAME
 from ddtrace.internal.utils.constants import MESSAGING_SYSTEM

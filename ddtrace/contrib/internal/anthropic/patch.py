@@ -11,7 +11,7 @@ from ddtrace.contrib.internal.anthropic._streaming import is_streaming_operation
 from ddtrace.contrib.internal.trace_utils import int_service
 from ddtrace.contrib.internal.trace_utils import unwrap
 from ddtrace.contrib.internal.trace_utils import wrap
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal._exceptions import DDBlockException
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.utils.version import parse_version

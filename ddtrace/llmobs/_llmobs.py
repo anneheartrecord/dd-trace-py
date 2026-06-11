@@ -30,7 +30,7 @@ from ddtrace.constants import ERROR_TYPE
 from ddtrace.ext import SpanTypes
 from ddtrace.ext import git
 from ddtrace.internal import atexit
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal import forksafe
 from ddtrace.internal.utils.compat import ensure_text
 from ddtrace.internal.utils.logger import get_logger

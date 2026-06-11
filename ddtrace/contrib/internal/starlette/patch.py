@@ -14,7 +14,7 @@ from ddtrace.contrib import trace_utils
 from ddtrace.contrib.asgi import TraceMiddleware
 from ddtrace.contrib.internal.trace_utils import with_traced_module
 from ddtrace.ext import http
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal._exceptions import BlockingException
 from ddtrace.internal.utils.compat import is_wrapted
 from ddtrace.internal.endpoints import endpoint_collection

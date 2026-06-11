@@ -3,7 +3,7 @@ from typing import Union
 
 from ddtrace.ext import net
 from ddtrace.ext import valkey as valkeyx
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.formats import stringify_cache_args
 
 

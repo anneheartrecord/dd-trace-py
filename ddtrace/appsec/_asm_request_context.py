@@ -24,7 +24,7 @@ from ddtrace.appsec._utils import Telemetry_result
 from ddtrace.appsec._utils import get_triggers
 from ddtrace.appsec._utils import is_inferred_span
 from ddtrace.contrib.internal.trace_utils_base import _normalize_tag_name
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal import telemetry
 from ddtrace.internal._exceptions import BlockingException
 import ddtrace.internal.utils.logger as ddlogger

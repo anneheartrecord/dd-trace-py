@@ -1,7 +1,7 @@
 import inspect
 
 from ddtrace import config
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.constants import COMPONENT
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.utils import ArgumentError

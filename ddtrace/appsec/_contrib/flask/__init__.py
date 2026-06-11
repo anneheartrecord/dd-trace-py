@@ -21,10 +21,10 @@ from ddtrace.contrib import trace_utils
 from ddtrace.contrib.internal.trace_utils_base import _get_request_header_user_agent
 from ddtrace.contrib.internal.trace_utils_base import _set_url_tag
 from ddtrace.ext import http
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.constants import REQUEST_PATH_PARAMS
 from ddtrace.internal.utils.constants import RESPONSE_HEADERS
-from ddtrace.internal.core import ExecutionContext
+from ddtrace.internal.utils.core import ExecutionContext
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.settings.asm import config as asm_config
 from ddtrace.internal.settings.integration import IntegrationConfig

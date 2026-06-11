@@ -12,7 +12,7 @@ from ddtrace import config
 from ddtrace.appsec._constants import AI_GUARD
 from ddtrace.appsec._trace_utils import _aiguard_manual_keep
 from ddtrace.ext import http
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal import telemetry
 from ddtrace.internal._exceptions import DDBlockException
 import ddtrace.internal.utils.logger as ddlogger

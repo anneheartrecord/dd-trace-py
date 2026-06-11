@@ -4,7 +4,7 @@ from wrapt import function_wrapper
 from ddtrace import config
 from ddtrace.contrib import trace_utils
 from ddtrace.contrib.internal.trace_utils import is_tracing_enabled
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.constants import COMPONENT
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.utils.importlib import func_name

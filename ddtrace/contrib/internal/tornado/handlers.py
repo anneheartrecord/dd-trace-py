@@ -7,7 +7,7 @@ from tornado.web import HTTPError
 from ddtrace import config
 from ddtrace.contrib.internal import trace_utils
 from ddtrace.ext import SpanTypes
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal._exceptions import BlockingException
 from ddtrace.internal._exceptions import find_exception
 from ddtrace.internal.utils.schema import schematize_url_operation

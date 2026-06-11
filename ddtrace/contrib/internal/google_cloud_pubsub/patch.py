@@ -13,7 +13,7 @@ from ddtrace import tracer
 from ddtrace.contrib.internal.google_cloud_pubsub.utils import ensure_config_registered
 from ddtrace.contrib.internal.google_cloud_pubsub.utils import parse_resource_path
 from ddtrace.ext import SpanTypes
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils import get_argument_value
 from ddtrace.internal.utils import set_argument_value
 from ddtrace.internal.utils.wrappers import unwrap as _u

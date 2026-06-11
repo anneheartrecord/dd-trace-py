@@ -9,7 +9,7 @@ from ddtrace.appsec._contrib.stripe.types import StripeEventPaymentIntent
 from ddtrace.appsec._contrib.stripe.types import StripeFailedEventPaymentIntent
 from ddtrace.appsec._contrib.stripe.types import StripePaymentIntent
 from ddtrace.appsec._contrib.stripe.types import StripeSucceededEventPaymentIntent
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.logger import get_logger
 
 

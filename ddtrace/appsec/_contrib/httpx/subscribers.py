@@ -13,9 +13,9 @@ from ddtrace.appsec._constants import EXPLOIT_PREVENTION
 from ddtrace.contrib._events.http_client import HttpClientEvents
 from ddtrace.contrib._events.http_client import HttpClientRequestEvent
 from ddtrace.contrib._events.http_client import HttpClientSendEvent
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal._exceptions import BlockingException
-from ddtrace.internal.core.subscriber import ContextSubscriber
+from ddtrace.internal.utils.core.subscriber import ContextSubscriber
 
 
 APPSEC_SSRF_ANALYZE_BODY_KEY = "appsec.ssrf_analyze_body"

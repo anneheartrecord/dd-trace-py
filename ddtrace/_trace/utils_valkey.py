@@ -15,7 +15,7 @@ from ddtrace.ext import SpanKind
 from ddtrace.ext import SpanTypes
 from ddtrace.ext import db
 from ddtrace.ext import valkey as valkeyx
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.constants import COMPONENT
 from ddtrace.internal.utils.schema import schematize_cache_operation
 from ddtrace.internal.utils.formats import stringify_cache_args

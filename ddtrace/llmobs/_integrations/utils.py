@@ -7,7 +7,7 @@ from typing import Optional
 from typing import Union
 
 from ddtrace._trace.span import Span
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.utils.formats import format_trace_id
 from ddtrace.llmobs._constants import DISPATCH_ON_LLM_TOOL_CHOICE

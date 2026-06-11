@@ -8,7 +8,7 @@ from ddtrace.appsec._capabilities import _asm_feature_is_required
 from ddtrace.appsec._capabilities import _rc_capabilities
 from ddtrace.appsec._constants import APPSEC
 from ddtrace.appsec._constants import PRODUCTS
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.remoteconfig import Payload
 from ddtrace.internal.remoteconfig import PayloadType

@@ -21,7 +21,7 @@ from typing import Generic
 from typing import Optional
 from typing import Sequence
 
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 
 from .events import EventType
 

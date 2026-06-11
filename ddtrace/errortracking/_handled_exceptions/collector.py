@@ -3,7 +3,7 @@ import typing as t
 from typing import NamedTuple
 
 from ddtrace._trace.span import Span
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.constants import COLLECTOR_MAX_SIZE_PER_SPAN
 from ddtrace.internal.utils.constants import SPAN_EVENTS_HAS_EXCEPTION
 from ddtrace.internal.utils.logger import get_logger

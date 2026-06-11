@@ -47,7 +47,7 @@ register_post_preload(manager.post_preload_products)
 # DEV: We want to start the crashtracker as early as possible
 if crashtracker_config.enabled:
     try:
-        from ddtrace.internal.core import crashtracking
+        from ddtrace.internal.utils.core import crashtracking
 
         crashtracking.start()
     except Exception:

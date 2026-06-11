@@ -20,7 +20,7 @@ from ddtrace.contrib.internal.llama_index._utils import build_query_request_kwar
 from ddtrace.contrib.internal.llama_index._utils import build_text_embedding_batch_request_kwargs
 from ddtrace.contrib.internal.llama_index._utils import get_model_provider
 from ddtrace.contrib.internal.trace_utils import int_service
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.llmobs._integrations import LlamaIndexIntegration
 

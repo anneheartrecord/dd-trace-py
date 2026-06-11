@@ -2,7 +2,7 @@ import asyncio
 from typing import Any
 
 from ddtrace._trace.pin import Pin
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils import get_argument_value
 from ddtrace.internal.utils import set_argument_value
 from ddtrace.internal.wrapping import unwrap

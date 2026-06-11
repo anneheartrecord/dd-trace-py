@@ -40,7 +40,7 @@ from ddtrace.debugging._signal.model import Signal
 from ddtrace.debugging._signal.model import SignalState
 from ddtrace.debugging._uploader import SignalUploader
 from ddtrace.debugging._uploader import UploaderProduct
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.compat import NO_EXCEPTION
 from ddtrace.internal.utils.compat import ExcInfoType
 from ddtrace.internal.utils.logger import get_logger

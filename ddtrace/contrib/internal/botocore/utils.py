@@ -8,8 +8,8 @@ from typing import Any
 from typing import Optional
 
 from ddtrace import config
-from ddtrace.internal import core
-from ddtrace.internal.core import ExecutionContext
+from ddtrace.internal.utils import core
+from ddtrace.internal.utils.core import ExecutionContext
 from ddtrace.internal.utils.logger import get_logger
 
 

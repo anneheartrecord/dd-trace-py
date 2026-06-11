@@ -8,7 +8,7 @@ from ddtrace import config
 from ddtrace._trace.pin import Pin
 from ddtrace.contrib import trace_utils
 from ddtrace.ext import SpanTypes
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.utils.schema import schematize_service_name
 from ddtrace.internal.utils.schema import schematize_url_operation

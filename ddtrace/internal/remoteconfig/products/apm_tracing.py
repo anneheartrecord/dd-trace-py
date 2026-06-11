@@ -3,8 +3,8 @@ import enum
 import typing as t
 
 from ddtrace import config
-from ddtrace.internal.core.event_hub import dispatch
-from ddtrace.internal.core.event_hub import on
+from ddtrace.internal.utils.core.event_hub import dispatch
+from ddtrace.internal.utils.core.event_hub import on
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.remoteconfig import Payload
 from ddtrace.internal.remoteconfig import RCCallback

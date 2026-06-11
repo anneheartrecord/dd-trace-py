@@ -1,5 +1,5 @@
 from ddtrace.debugging._session import Session
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 
 
 def enable() -> None:

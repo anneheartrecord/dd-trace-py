@@ -3,7 +3,7 @@ from typing import Optional
 
 from ddtrace._trace.span import Span
 from ddtrace.appsec._constants import IAST
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 
 
 if TYPE_CHECKING:  # pragma: no cover - type checking only

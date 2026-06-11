@@ -7,7 +7,7 @@ from ddtrace.contrib._events.aws_durable import AwsDurableExecuteEvent
 from ddtrace.contrib._events.aws_durable import AwsDurableInvokeEvent
 from ddtrace.contrib._events.aws_durable import AwsDurableOperationEvent
 from ddtrace.ext import aws_durable
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 
 
 class AwsDurableExecuteSubscriber(TracingSubscriber):

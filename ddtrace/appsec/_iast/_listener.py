@@ -19,7 +19,7 @@ from ddtrace.appsec._iast._handlers import _on_wsgi_environ
 from ddtrace.appsec._iast._iast_request_context import _iast_end_request
 from ddtrace.appsec._iast._langchain import langchain_listen
 from ddtrace.appsec._iast.taint_sinks.sql_injection import _on_report_sqli
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 
 
 def iast_listen():

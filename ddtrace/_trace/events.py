@@ -6,7 +6,7 @@ from typing import ClassVar
 from typing import Mapping
 from typing import Optional
 
-from ddtrace.internal.core.events import Event
+from ddtrace.internal.utils.core.events import Event
 from ddtrace.internal.settings.integration import IntegrationConfig
 
 

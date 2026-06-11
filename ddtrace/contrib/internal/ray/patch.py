@@ -14,7 +14,7 @@ from ddtrace.contrib.internal.ray.core.api import traced_put
 from ddtrace.contrib.internal.ray.core.api import traced_wait
 from ddtrace.contrib.internal.ray.core.remote_function import traced_submit_task
 from ddtrace.contrib.internal.trace_utils import unwrap as _u
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.utils.module import ModuleWatchdog
 from ddtrace.internal.settings import env

@@ -7,7 +7,7 @@ from ddtrace import config
 from ddtrace.contrib.internal.botocore.constants import BOTOCORE_STEPFUNCTIONS_INPUT_KEY
 from ddtrace.contrib.internal.trace_utils import ext_service
 from ddtrace.ext import SpanTypes
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.logger import get_logger
 from ddtrace.internal.utils.schema import SpanDirection
 from ddtrace.internal.utils.schema import schematize_cloud_messaging_operation

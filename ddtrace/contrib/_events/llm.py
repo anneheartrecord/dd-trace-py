@@ -7,7 +7,7 @@ from typing import Optional
 from ddtrace._trace.events import TracingEvent
 from ddtrace.ext import SpanKind
 from ddtrace.ext import SpanTypes
-from ddtrace.internal.core.events import event_field
+from ddtrace.internal.utils.core.events import event_field
 
 
 if TYPE_CHECKING:

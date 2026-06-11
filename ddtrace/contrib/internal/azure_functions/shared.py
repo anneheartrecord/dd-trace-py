@@ -14,7 +14,7 @@ from ddtrace.ext import SpanKind
 from ddtrace.ext import SpanTypes
 from ddtrace.ext import azure_eventhubs as azure_eventhubsx
 from ddtrace.ext import azure_servicebus as azure_servicebusx
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 from ddtrace.internal.utils.schema import schematize_cloud_faas_operation
 from ddtrace.propagation.http import HTTPPropagator
 

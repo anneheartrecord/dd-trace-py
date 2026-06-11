@@ -6,7 +6,7 @@ from typing import Optional
 from ddtrace.appsec._asm_request_context import set_headers
 from ddtrace.appsec._asm_request_context import set_waf_address
 from ddtrace.appsec._constants import SPAN_DATA_NAMES
-from ddtrace.internal import core
+from ddtrace.internal.utils import core
 
 
 def _on_grpc_server_response(message: Any) -> None:
