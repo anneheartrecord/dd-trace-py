@@ -43,7 +43,7 @@ def _build_span(kwargs: dict[str, Any]) -> Optional[Any]:
         span = tracer.start_span(
             "pytorch.rank",
             service=int_service(None, config.pytorch, default="pytorch"),
-            child_of=tracer.current_span(),
+            child_of=None,
             activate=False,
         )
     except Exception:
