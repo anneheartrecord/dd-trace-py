@@ -73,12 +73,17 @@ mkdir -p "$WORK_DIR"
 for tool in perf python3 git gcc g++; do
   command -v "$tool" >/dev/null || { echo "ERROR: $tool not on PATH" >&2; exit 1; }
 done
+FLAMEGRAPH_DIR="${FLAMEGRAPH_DIR:-$HOME/FlameGraph}"
+if ! command -v stackcollapse-perf.pl >/dev/null 2>&1; then
+  if [[ ! -d "$FLAMEGRAPH_DIR" ]]; then
+    echo "FlameGraph tools not on PATH — cloning into $FLAMEGRAPH_DIR ..."
+    git clone --depth=1 https://github.com/brendangregg/FlameGraph "$FLAMEGRAPH_DIR"
+  fi
+  export PATH="$FLAMEGRAPH_DIR:$PATH"
+fi
 for tool in stackcollapse-perf.pl flamegraph.pl difffolded.pl; do
   command -v "$tool" >/dev/null || {
-    echo "ERROR: $tool not on PATH." >&2
-    echo "  git clone https://github.com/brendangregg/FlameGraph ~/FlameGraph" >&2
-    echo "  export PATH=\"\$HOME/FlameGraph:\$PATH\"" >&2
-    exit 1
+    echo "ERROR: $tool not found in $FLAMEGRAPH_DIR" >&2; exit 1
   }
 done
 
