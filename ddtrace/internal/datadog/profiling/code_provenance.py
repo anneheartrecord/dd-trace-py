@@ -31,6 +31,9 @@ class Library:
     def to_dict(self) -> dict[str, t.Any]:
         return {"kind": self.kind, "name": self.name, "version": self.version, "paths": list(self.paths)}
 
+    def __repr__(self) -> str:
+        return f"Library(kind={self.kind}, name={self.name}, version={self.version}, paths={self.paths})"
+
 
 class CodeProvenance:
     def __init__(self) -> None:
@@ -75,6 +78,9 @@ class CodeProvenance:
         libraries: dict[str, Library] = {}
 
         site_packages = Path(sysconfig.get_path("purelib"))
+        # Precompute sys.path dirs once for the Bazel fallback below.
+        _sys_path_dirs = [Path(p) for p in sys.path if p]
+
         for module, dist in module_to_distribution.items():
             name = dist.name
             # special case for __pycache__/filename.cpython-3xx.pyc -> filename.py
@@ -91,6 +97,20 @@ class CodeProvenance:
             module_path = site_packages / module
             if module.endswith(".py") or module_path.is_dir():
                 lib.paths.add(str(module_path))
+            else:
+                # Fallback for Bazel runfiles (and similar envs) where each
+                # package lives in its own isolated site-packages dir rather
+                # than the single purelib. Search sys.path for the actual
+                # location.
+                for base in _sys_path_dirs:
+                    candidate = base / module
+                    if candidate.is_dir():
+                        lib.paths.add(str(candidate))
+                        break
+                    candidate_py = base / (module + ".py")
+                    if candidate_py.is_file():
+                        lib.paths.add(str(candidate_py))
+                        break
 
         # If the user installed their code like a library and is running it as
         # the main package (python -m my_package), and they explicitly specified
