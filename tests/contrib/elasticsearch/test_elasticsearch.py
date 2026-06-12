@@ -1,8 +1,10 @@
+import asyncio
 import datetime
 from http.client import HTTPConnection
 from importlib import import_module
 import json
 import time
+from unittest import mock
 
 import pytest
 
@@ -373,3 +375,141 @@ class ElasticsearchPatchTest(TracerTestCase):
         assert len(versions) > 0
         for module_name, v in versions.items():
             emit_integration_and_version_to_test_agent("elasticsearch", v, module_name=module_name)
+
+    def test_sync_coro_close_called_on_transport_error(self):
+        """Regression test for gh #17100: sync path must explicitly call coro.close() on TransportError.
+
+        Uses a _SpyGenerator wrapper to assert close() is called explicitly — not via CPython's
+        tp_finalize. CPython's refcount-based GC closes generators directly through the C-level
+        tp_finalize, bypassing the Python-level spy.close(). Therefore spy.close_called is only
+        True if the instrumentation code calls coro.close() explicitly.
+
+        Only meaningful for clients where next(coro) raises (elasticsearch<8, opensearch-py).
+        For elastic-transport (elasticsearch>=8), the transport layer does not raise inside the
+        generator; the generator exits normally and the assertion is skipped.
+        """
+        import ddtrace.contrib.internal.elasticsearch.patch as es_module
+
+        spy_ref = [None]
+        original_factory = es_module._get_perform_request_coro
+
+        def spy_factory(transport_obj):
+            inner = original_factory(transport_obj)
+
+            def wrapper(func, instance, args, kwargs):
+                s = _SpyGenerator(inner(func, instance, args, kwargs))
+                spy_ref[0] = s
+                return s
+
+            return wrapper
+
+        with mock.patch.object(es_module, "_get_perform_request_coro", spy_factory):
+            unpatch()
+            patch()
+
+        try:
+            self.es.search(index="nonexistent_for_zombie_span_test_sync", body={"query": {"match_all": {}}})
+        except Exception:
+            pass
+        finally:
+            unpatch()
+            patch()
+
+        spy = spy_ref[0]
+        assert spy is not None, "spy never received a generator — request did not exercise the patch"
+
+        # For pre-elastic-transport clients, next(coro) raises and close() is required.
+        # For elastic-transport (elasticsearch>=8), the transport returns the response without
+        # raising, so close() is never called on either path; skip that assertion.
+        if elasticsearch.__version__ < (8, 0, 0):
+            assert spy.close_called, (
+                "coro.close() was not called explicitly on TransportError (gh #17100). "
+                "Zombie spans may linger on non-CPython runtimes without an explicit close."
+            )
+
+    def test_async_coro_close_called_on_transport_error(self):
+        """Regression test for gh #17100: async path must explicitly call coro.close() on TransportError.
+
+        In the async wrapper, 'await next(coro)' suspends the sync generator coro at its yield
+        point. When the awaited coroutine raises, coro is left suspended — the with tracer.trace()
+        block has not exited and span.finish() has not been called. Without an explicit coro.close(),
+        the span stays open until CPython GC runs (which may be immediate via refcounting, or
+        deferred on other runtimes like PyPy).
+
+        Uses a _SpyGenerator wrapper: CPython closes spy._gen via tp_finalize, bypassing spy.close(),
+        so spy.close_called is only True when close() is called explicitly by the instrumentation.
+        """
+        opensearchpy = pytest.importorskip("opensearchpy", reason="opensearch-py not installed in this env")
+        if not hasattr(opensearchpy, "AsyncOpenSearch"):
+            pytest.skip("opensearch-py < 2.0: AsyncOpenSearch not available")
+
+        import ddtrace.contrib.internal.elasticsearch.patch as es_module
+
+        async_spy_ref = [None]
+        original_factory = es_module._get_perform_request_coro
+
+        def spy_factory(transport_obj):
+            inner = original_factory(transport_obj)
+
+            def wrapper(func, instance, args, kwargs):
+                s = _SpyGenerator(inner(func, instance, args, kwargs))
+                async_spy_ref[0] = s
+                return s
+
+            return wrapper
+
+        with mock.patch.object(es_module, "_get_perform_request_coro", spy_factory):
+            unpatch()
+            patch()
+
+        config = self._get_es_config()
+        url = "http://%s:%d" % (config["host"], config["port"])
+
+        async def run():
+            es = opensearchpy.AsyncOpenSearch(hosts=[url])
+            try:
+                await es.search(index="nonexistent_for_zombie_span_test_async", body={"query": {"match_all": {}}})
+            except Exception:
+                pass
+            finally:
+                await es.close()
+
+        try:
+            asyncio.get_event_loop().run_until_complete(run())
+        finally:
+            unpatch()
+            patch()
+
+        spy = async_spy_ref[0]
+        assert spy is not None, "spy never received a generator — async request did not exercise the patch"
+        assert spy.close_called, (
+            "coro.close() was not called explicitly on async TransportError (gh #17100). "
+            "The sync generator stays suspended at its yield point until GC, producing zombie "
+            "spans on non-CPython runtimes."
+        )
+
+
+class _SpyGenerator:
+    """Wraps a generator to record explicit close() calls.
+
+    CPython's tp_finalize closes generators by calling gen.close() at the C level, bypassing
+    any Python-level spy.close() override. This class is a plain Python object (not a generator),
+    so its close() is only called when the instrumentation code calls it explicitly.
+    """
+
+    def __init__(self, gen):
+        self._gen = gen
+        self.close_called = False
+
+    def __next__(self):
+        return next(self._gen)
+
+    def send(self, value):
+        return self._gen.send(value)
+
+    def throw(self, typ, val=None, tb=None):
+        return self._gen.throw(typ, val, tb)
+
+    def close(self):
+        self.close_called = True
+        self._gen.close()
