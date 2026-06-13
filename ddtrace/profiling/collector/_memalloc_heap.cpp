@@ -158,9 +158,10 @@ class heap_tracker_t
      * own threshold. This prevents MEM-domain traffic from inflating the OBJ
      * sample rate and vice versa.
      * Indexed by PyMemAllocatorDomain: RAW=0, MEM=1, OBJ=2. */
-    struct domain_state_t {
-        uint64_t allocated_memory{0};
-        uint64_t current_sample_size{0};
+    struct domain_state_t
+    {
+        uint64_t allocated_memory{ 0 };
+        uint64_t current_sample_size{ 0 };
     };
     std::array<domain_state_t, 3> domain_states_;
 
@@ -315,10 +316,10 @@ heap_tracker_t::reset_sampling_state_no_cpython(PyMemAllocatorDomain domain)
     ds.allocated_memory = 0;
     // MEM domain samples 4× less frequently than OBJ/RAW to reduce the cost of
     // CPython traceback capture on high-frequency small allocations.
-    const uint32_t effective_rate = (domain == PYMEM_DOMAIN_MEM)
-        ? static_cast<uint32_t>(std::min<uint64_t>(
-              static_cast<uint64_t>(sample_size) * MEM_DOMAIN_SAMPLE_RATE_FACTOR, UINT32_MAX))
-        : static_cast<uint32_t>(sample_size);
+    const uint32_t effective_rate =
+      (domain == PYMEM_DOMAIN_MEM) ? static_cast<uint32_t>(std::min<uint64_t>(
+                                       static_cast<uint64_t>(sample_size) * MEM_DOMAIN_SAMPLE_RATE_FACTOR, UINT32_MAX))
+                                   : static_cast<uint32_t>(sample_size);
     ds.current_sample_size = next_sample_size_no_cpython(effective_rate);
 }
 
@@ -389,18 +390,28 @@ memalloc_heap_untrack_no_cpython(void* ptr)
     }
 }
 
-/* Track a memory allocation in the heap profiler. */
-void
-memalloc_heap_track_invokes_cpython(uint16_t max_nframe, void* ptr, size_t size, PyMemAllocatorDomain domain)
+/* Cheap sampling gate: bump the domain's byte counter and check the threshold.
+ * Called from every alloc/realloc hook in _memalloc.cpp.  Returns false for
+ * ~999/1000 allocations, avoiding the function-call overhead of the full
+ * traceback path on the hot path. */
+bool
+memalloc_heap_sample_check_no_cpython(size_t size, PyMemAllocatorDomain domain, uint64_t* allocated_memory_val)
 {
     if (!heap_tracker_t::instance) {
-        return;
+        return false;
     }
-    uint64_t allocated_memory_val = 0;
-    if (!heap_tracker_t::instance->should_sample_no_cpython(size, domain, &allocated_memory_val)) {
-        return;
-    }
+    return heap_tracker_t::instance->should_sample_no_cpython(size, domain, allocated_memory_val);
+}
 
+/* Expensive path: collect traceback, record sample.  Only call after
+ * memalloc_heap_sample_check_no_cpython returned true. */
+void
+memalloc_heap_track_sample_invokes_cpython(uint16_t max_nframe,
+                                           void* ptr,
+                                           size_t size,
+                                           PyMemAllocatorDomain domain,
+                                           uint64_t allocated_memory_val)
+{
     /* Skip tracking if we're already inside the malloc hook on this thread.
      * Reentrant tracking would corrupt the heap tracker's data structures. */
     memalloc_reentrant_guard_t guard;
@@ -433,13 +444,6 @@ memalloc_heap_track_invokes_cpython(uint16_t max_nframe, void* ptr, size_t size,
     pygc_temp_disable_guard_t gc_guard;
 #endif // defined(_PY310_AND_LATER) && !defined(_PY312_AND_LATER)
 
-    /* The weight of the allocation is described above, but briefly: it's the
-       count of bytes allocated since the last sample, including this one, which
-       will tend to be larger for large allocations and smaller for small
-       allocations, and close to the average sampling interval so that the sum
-       of sample live allocations stays close to the actual heap size */
-
-    // Check that instance is valid before creating traceback
     if (!heap_tracker_t::instance) {
         return;
     }
@@ -447,32 +451,18 @@ memalloc_heap_track_invokes_cpython(uint16_t max_nframe, void* ptr, size_t size,
     auto tb =
       heap_tracker_t::instance->pool_get_with_alloc_data_invokes_cpython(size, allocated_memory_val, max_nframe);
 
-    // Export allocation sample right away to avoid holding it
     tb->sample.export_sample();
-    // Reset the allocation data, keep heap data for tracking
     tb->sample.reset_alloc();
-    // pool_get_with_alloc_data_invokes_cpython() creates sample with allocation data only (no heap data)
-    // to avoid double-pushing allocation data, we manually push heap data here.
-    // Use the weighted size (allocated_memory_val) so the heap profile accounts
-    // for sampling, matching the tcmalloc/Go pprof approach: each sampled live
-    // allocation represents ~R bytes of heap, not just its own raw size.
-    //
-    // For heap-live-samples, use the Horvitz-Thompson estimator: w = 1 / (1 - exp(-S/R))
-    // where S is the allocation size and R is the sampling interval.
-    // This is the inverse of the probability that a contiguous region of S bytes
-    // contains at least one Poisson sample point. Each sampled allocation of size S
-    // represents w real allocations of that size in the population.
+    // Horvitz-Thompson estimator: w = 1 / (1 - exp(-S/R))
     double s = static_cast<double>(size > 0 ? size : 1);
     double r = static_cast<double>(heap_tracker_t::instance->get_sample_size());
     double p = 1.0 - std::exp(-s / r);
     int64_t heap_count = static_cast<int64_t>(1.0 / p);
     tb->sample.push_heap(allocated_memory_val, heap_count);
 
-    // Check that instance is still valid after GIL release in constructor
     if (heap_tracker_t::instance) {
         heap_tracker_t::instance->add_sample_no_cpython(ptr, std::move(tb), domain);
     }
-    // If instance is gone, tb's unique_ptr automatically deletes the traceback
 }
 
 void

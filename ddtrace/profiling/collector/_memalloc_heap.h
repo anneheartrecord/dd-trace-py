@@ -17,8 +17,27 @@ memalloc_heap_tracker_deinit_no_cpython(void);
 void
 memalloc_heap_no_cpython(void);
 
+/* Cheap inline sampling gate: bumps the domain's byte counter and returns true
+ * when the threshold is crossed.  Called from every alloc/realloc hook in
+ * _memalloc.cpp; the expensive traceback path (memalloc_heap_track_sample_invokes_cpython)
+ * is only entered when this returns true.
+ *
+ * On return true, *allocated_memory_val is set to the domain's accumulated
+ * byte count for use as the sample weight.
+ *
+ * Does NOT make CPython API calls.  Must be called with the GIL held. */
+bool
+memalloc_heap_sample_check_no_cpython(size_t size, PyMemAllocatorDomain domain, uint64_t* allocated_memory_val);
+
+/* Expensive path: collect traceback, record sample. Only call after
+ * memalloc_heap_sample_check_no_cpython returned true. */
 void
-memalloc_heap_track_invokes_cpython(uint16_t max_nframe, void* ptr, size_t size, PyMemAllocatorDomain domain);
+memalloc_heap_track_sample_invokes_cpython(uint16_t max_nframe,
+                                           void* ptr,
+                                           size_t size,
+                                           PyMemAllocatorDomain domain,
+                                           uint64_t allocated_memory_val);
+
 void
 memalloc_heap_untrack_no_cpython(void* ptr);
 
